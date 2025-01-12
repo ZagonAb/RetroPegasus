@@ -1,0 +1,53 @@
+collection: Sega - 32X
+shortname: 32x
+launch: flatpak run org.libretro.RetroArch -L /home/gonza/.var/app/org.libretro.RetroArch/config/retroarch/cores/picodrive_libretro.so {file.path}
+
+game: Amazing Spider-Man, The - Web of Fire (USA)
+file: /media/gonza/DISCO2/sega32x/Amazing Spider-Man, The - Web of Fire (USA).zip
+assets.boxFront: ./media/boxFront/Amazing Spider-Man, The - Web of Fire (USA).png
+assets.screenshot: ./media/screenshot/Amazing Spider-Man, The - Web of Fire (USA).png
+
+game: Blackthorne (USA)
+file: /media/gonza/DISCO2/sega32x/Blackthorne (USA).zip
+assets.boxFront: ./media/boxFront/Blackthorne (USA).png
+assets.screenshot: ./media/screenshot/Blackthorne (USA).png
+
+game: Knuckles' Chaotix (Europe)
+file: /media/gonza/DISCO2/sega32x/Knuckles' Chaotix (Europe).zip
+assets.boxFront: ./media/boxFront/Knuckles' Chaotix (Europe).png
+assets.screenshot: ./media/screenshot/Knuckles' Chaotix (Europe).png
+
+game: Mortal Kombat II (Japan, USA) (En)
+file: /media/gonza/DISCO2/sega32x/Mortal Kombat II (Japan, USA).zip
+assets.boxFront: ./media/boxFront/Mortal Kombat II (Japan, USA) (En).png
+assets.screenshot: ./media/screenshot/Mortal Kombat II (Japan, USA) (En).png
+
+game: Motocross Championship (USA)
+file: /media/gonza/DISCO2/sega32x/Motocross Championship (USA).zip
+assets.boxFront: ./media/boxFront/Motocross Championship (USA).png
+assets.screenshot: ./media/screenshot/Motocross Championship (USA).png
+
+game: Tempo (Japan, USA) (En)
+file: /media/gonza/DISCO2/sega32x/Tempo (Japan, USA).zip
+assets.boxFront: ./media/boxFront/Tempo (Japan, USA) (En).png
+assets.screenshot: ./media/screenshot/Tempo (Japan, USA) (En).png
+
+game: Virtua Fighter (Japan, USA) (En)
+file: /media/gonza/DISCO2/sega32x/Virtua Fighter (Japan, USA).zip
+assets.boxFront: ./media/boxFront/Virtua Fighter (Japan, USA) (En).png
+assets.screenshot: ./media/screenshot/Virtua Fighter (Japan, USA) (En).png
+
+game: Virtua Racing Deluxe (Japan)
+file: /media/gonza/DISCO2/sega32x/Virtua Racing Deluxe (Japan).zip
+assets.boxFront: ./media/boxFront/Virtua Racing Deluxe (Japan).png
+assets.screenshot: ./media/screenshot/Virtua Racing Deluxe (Japan).png
+
+game: Virtua Racing Deluxe (USA)
+file: /media/gonza/DISCO2/sega32x/Virtua Racing Deluxe (USA).zip
+assets.boxFront: ./media/boxFront/Virtua Racing Deluxe (USA).png
+assets.screenshot: ./media/screenshot/Virtua Racing Deluxe (USA).png
+
+game: X-Men (USA) (Proto)
+file: /media/gonza/DISCO2/sega32x/X-Men (USA) (Proto).zip
+assets.boxFront: ./media/boxFront/X-Men (USA) (Proto).png
+assets.screenshot: ./media/screenshot/X-Men (USA) (Proto).png

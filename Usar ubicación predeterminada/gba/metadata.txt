@@ -1,0 +1,423 @@
+collection: Nintendo - Game Boy Advance
+shortname: gba
+launch: flatpak run org.libretro.RetroArch -L DETECT {file.path}
+
+game: WarioWare, Inc. - Minigame Mania (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/WarioWare, Inc. - Minigame Mania (Europe) (En,Fr,De,Es,It).gba
+assets.boxFront: ./media/boxFront/WarioWare, Inc. - Minigame Mania (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/WarioWare, Inc. - Minigame Mania (Europe) (En,Fr,De,Es,It).png
+
+game: Legend of Zelda, The - The Minish Cap (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/The Legend of Zelda - The Minish Cap.gba
+assets.boxFront: ./media/boxFront/Legend of Zelda, The - The Minish Cap (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Legend of Zelda, The - The Minish Cap (Europe) (En,Fr,De,Es,It).png
+
+game: Legend of Zelda, The - A Link to the Past & Four Swords (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/The  Legend of Zelda - A Link to the Past & Four Swords.gba
+assets.boxFront: ./media/boxFront/Legend of Zelda, The - A Link to the Past & Four Swords (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Legend of Zelda, The - A Link to the Past & Four Swords (Europe) (En,Fr,De,Es,It).png
+
+game: Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It) (Rev 1)
+file: /media/gonza/DISCO2/gba/Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It) (Rev 1).gba
+assets.boxFront: ./media/boxFront/Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It) (Rev 1).png
+assets.screenshot: ./media/screenshot/Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It) (Rev 1).png
+
+game: Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Super Mario Advance 4.gba
+assets.boxFront: ./media/boxFront/Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It).png
+
+game: Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It).gba
+assets.boxFront: ./media/boxFront/Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It).png
+
+game: Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Super Mario Advance 3.gba
+assets.boxFront: ./media/boxFront/Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It).png
+
+game: Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es)
+file: /media/gonza/DISCO2/gba/Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es).gba
+assets.boxFront: ./media/boxFront/Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es).png
+assets.screenshot: ./media/screenshot/Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es).png
+
+game: Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es)
+file: /media/gonza/DISCO2/gba/Super Mario Advance 2.gba
+assets.boxFront: ./media/boxFront/Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es).png
+assets.screenshot: ./media/screenshot/Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es).png
+
+game: Star Wars - Episode III - Revenge of the Sith (Europe) (En,Fr,De,Es,It,Nl)
+file: /media/gonza/DISCO2/gba/Star Wars Episode III - Revenge of the Sith.gba
+assets.boxFront: ./media/boxFront/Star Wars - Episode III - Revenge of the Sith (Europe) (En,Fr,De,Es,It,Nl).png
+assets.screenshot: ./media/screenshot/Star Wars - Episode III - Revenge of the Sith (Europe) (En,Fr,De,Es,It,Nl).png
+
+game: Sonic Advance 3 (USA) (En,Ja,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Sonic Advance 3.gba
+assets.boxFront: ./media/boxFront/Sonic Advance 3 (USA) (En,Ja,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Sonic Advance 3 (USA) (En,Ja,Fr,De,Es,It).png
+
+game: Sonic Advance 2 (USA) (En,Ja,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Sonic Advance 2.gba
+assets.boxFront: ./media/boxFront/Sonic Advance 2 (USA) (En,Ja,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Sonic Advance 2 (USA) (En,Ja,Fr,De,Es,It).png
+
+game: Sonic Advance (Europe) (En,Ja,Fr,De,Es)
+file: /media/gonza/DISCO2/gba/Sonic Advance (Europe) (En,Ja,Fr,De,Es).gba
+assets.boxFront: ./media/boxFront/Sonic Advance (Europe) (En,Ja,Fr,De,Es).png
+assets.screenshot: ./media/screenshot/Sonic Advance (Europe) (En,Ja,Fr,De,Es).png
+
+game: Sonic Advance (Europe) (En,Ja,Fr,De,Es)
+file: /media/gonza/DISCO2/gba/Sonic Advance .gba
+assets.boxFront: ./media/boxFront/Sonic Advance (Europe) (En,Ja,Fr,De,Es).png
+assets.screenshot: ./media/screenshot/Sonic Advance (Europe) (En,Ja,Fr,De,Es).png
+
+game: Rayman - Raving Rabbids (Europe) (En,Fr,De,Es,It,Nl)
+file: /media/gonza/DISCO2/gba/Rayman Raving Rabbids.gba
+assets.boxFront: ./media/boxFront/Rayman - Raving Rabbids (Europe) (En,Fr,De,Es,It,Nl).png
+assets.screenshot: ./media/screenshot/Rayman - Raving Rabbids (Europe) (En,Fr,De,Es,It,Nl).png
+
+game: Rayman Advance (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Rayman Advance.gba
+assets.boxFront: ./media/boxFront/Rayman Advance (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Rayman Advance (Europe) (En,Fr,De,Es,It).png
+
+game: Rayman 3 (USA) (En,Fr,Es)
+file: /media/gonza/DISCO2/gba/Rayman 3.gba
+assets.boxFront: ./media/boxFront/Rayman 3 (USA) (En,Fr,Es).png
+assets.screenshot: ./media/screenshot/Rayman 3 (USA) (En,Fr,Es).png
+
+game: Pokemon Mystery Dungeon - Red Rescue Team (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Pokemon Mundo misterioso - Equipo de rescate rojo.gba
+assets.boxFront: ./media/boxFront/Pokemon Mystery Dungeon - Red Rescue Team (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Pokemon Mystery Dungeon - Red Rescue Team (Europe) (En,Fr,De,Es,It).png
+
+game: Pokemon - Edicion Verde Hoja (Spain)
+file: /media/gonza/DISCO2/gba/Pokemon - Verde hoja.gba
+assets.boxFront: ./media/boxFront/Pokemon - Edicion Verde Hoja (Spain).png
+assets.screenshot: ./media/screenshot/Pokemon - Edicion Verde Hoja (Spain).png
+
+game: Pokemon - Edicion Rojo Fuego (Spain)
+file: /media/gonza/DISCO2/gba/Pokemon - Rojo fuego.gba
+assets.boxFront: ./media/boxFront/Pokemon - Edicion Rojo Fuego (Spain).png
+assets.screenshot: ./media/screenshot/Pokemon - Edicion Rojo Fuego (Spain).png
+
+game: Pokemon Pinball - Ruby & Sapphire (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Pokemon - Pinball RZ.gba
+assets.boxFront: ./media/boxFront/Pokemon Pinball - Ruby & Sapphire (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Pokemon Pinball - Ruby & Sapphire (Europe) (En,Fr,De,Es,It).png
+
+game: Pokemon - Edicion Esmeralda (Spain)
+file: /media/gonza/DISCO2/gba/Pokemon - Esmeralda.gba
+assets.boxFront: ./media/boxFront/Pokemon - Edicion Esmeralda (Spain).png
+assets.screenshot: ./media/screenshot/Pokemon - Edicion Esmeralda (Spain).png
+
+game: Pokemon - Edicion Verde Hoja (Spain)
+file: /media/gonza/DISCO2/gba/Pokemon - Edicion Verde Hoja (Spain).gba
+assets.boxFront: ./media/boxFront/Pokemon - Edicion Verde Hoja (Spain).png
+assets.screenshot: ./media/screenshot/Pokemon - Edicion Verde Hoja (Spain).png
+
+game: Planet of the Apes (Europe) (En,Fr,De,Es,It,Nl)
+file: /media/gonza/DISCO2/gba/Planet of the Apes.gba
+assets.boxFront: ./media/boxFront/Planet of the Apes (Europe) (En,Fr,De,Es,It,Nl).png
+assets.screenshot: ./media/screenshot/Planet of the Apes (Europe) (En,Fr,De,Es,It,Nl).png
+
+game: Pirates of the Caribbean - Dead Man's Chest (USA, Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Piratas del Caribe - El cofre del hombre muerto.gba
+assets.boxFront: ./media/boxFront/Pirates of the Caribbean - Dead Man's Chest (USA, Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Pirates of the Caribbean - Dead Man's Chest (USA, Europe) (En,Fr,De,Es,It).png
+
+game: Pinball Advance (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Pinball Advance.gba
+assets.boxFront: ./media/boxFront/Pinball Advance (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Pinball Advance (Europe) (En,Fr,De,Es,It).png
+
+game: Phalanx (Europe) (En,Fr,De,Es,It,Nl)
+file: /media/gonza/DISCO2/gba/Phalanx - The Enforce Fighter A-144.gba
+assets.boxFront: ./media/boxFront/Phalanx (Europe) (En,Fr,De,Es,It,Nl).png
+assets.screenshot: ./media/screenshot/Phalanx (Europe) (En,Fr,De,Es,It,Nl).png
+
+game: Need for Speed - Carbon - Own the City (USA, Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Need for Speed Carbon - Own The City.gba
+assets.boxFront: ./media/boxFront/Need for Speed - Carbon - Own the City (USA, Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Need for Speed - Carbon - Own the City (USA, Europe) (En,Fr,De,Es,It).png
+
+game: Chronicles of Narnia, The - The Lion, the Witch and the Wardrobe (USA, Europe) (En,Fr,De,Es,It,Nl,Sv,Da)
+file: /media/gonza/DISCO2/gba/Narnia - El leon la bruja y el armario.gba
+assets.boxFront: ./media/boxFront/Chronicles of Narnia, The - The Lion, the Witch and the Wardrobe (USA, Europe) (En,Fr,De,Es,It,Nl,Sv,Da).png
+assets.screenshot: ./media/screenshot/Chronicles of Narnia, The - The Lion, the Witch and the Wardrobe (USA, Europe) (En,Fr,De,Es,It,Nl,Sv,Da).png
+
+game: Metroid Fusion (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Metroid Fusion (Europe) (En,Fr,De,Es,It).gba
+assets.boxFront: ./media/boxFront/Metroid Fusion (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Metroid Fusion (Europe) (En,Fr,De,Es,It).png
+
+game: Metroid - Zero Mission (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Metroid - Zero Mission (Europe) (En,Fr,De,Es,It).gba
+assets.boxFront: ./media/boxFront/Metroid - Zero Mission (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Metroid - Zero Mission (Europe) (En,Fr,De,Es,It).png
+
+game: Metroid - Zero Mission (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Metroid - Zero Mission.gba
+assets.boxFront: ./media/boxFront/Metroid - Zero Mission (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Metroid - Zero Mission (Europe) (En,Fr,De,Es,It).png
+
+game: Metroid Fusion (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Metroid - Fusion.gba
+assets.boxFront: ./media/boxFront/Metroid Fusion (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Metroid Fusion (Europe) (En,Fr,De,Es,It).png
+
+game: Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Mario vs. Donkey Kong.gba
+assets.boxFront: ./media/boxFront/Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It).png
+
+game: Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It).gba
+assets.boxFront: ./media/boxFront/Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It).png
+
+game: Mario Tennis - Power Tour (USA, Australia) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Mario Tennis Power Tour.gba
+assets.boxFront: ./media/boxFront/Mario Tennis - Power Tour (USA, Australia) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Mario Tennis - Power Tour (USA, Australia) (En,Fr,De,Es,It).png
+
+game: Mario Party Advance (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Mario Party Advance.gba
+assets.boxFront: ./media/boxFront/Mario Party Advance (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Mario Party Advance (Europe) (En,Fr,De,Es,It).png
+
+game: Mario Golf - Advance Tour (Spain)
+file: /media/gonza/DISCO2/gba/Mario Golf - Advance Tour.gba
+assets.boxFront: ./media/boxFront/Mario Golf - Advance Tour (Spain).png
+assets.screenshot: ./media/screenshot/Mario Golf - Advance Tour (Spain).png
+
+game: Mario & Luigi - Superstar Saga (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Mario & Luigi Superstar Saga.gba
+assets.boxFront: ./media/boxFront/Mario & Luigi - Superstar Saga (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Mario & Luigi - Superstar Saga (Europe) (En,Fr,De,Es,It).png
+
+game: Kirby & The Amazing Mirror (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Kirby & the Amazing Mirror (Europe) (En,Fr,De,Es,It).gba
+assets.boxFront: ./media/boxFront/Kirby & The Amazing Mirror (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Kirby & The Amazing Mirror (Europe) (En,Fr,De,Es,It).png
+
+game: Kirby & The Amazing Mirror (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Kirby - The Amazing Mirror.gba
+assets.boxFront: ./media/boxFront/Kirby & The Amazing Mirror (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Kirby & The Amazing Mirror (Europe) (En,Fr,De,Es,It).png
+
+game: Kirby - Nightmare in Dream Land (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Kirby - Nightmare in Dream Land.gba
+assets.boxFront: ./media/boxFront/Kirby - Nightmare in Dream Land (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Kirby - Nightmare in Dream Land (Europe) (En,Fr,De,Es,It).png
+
+game: Kingdom Hearts - Chain of Memories (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Kingdom Hearts - Chain of Memories.gba
+assets.boxFront: ./media/boxFront/Kingdom Hearts - Chain of Memories (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Kingdom Hearts - Chain of Memories (Europe) (En,Fr,De,Es,It).png
+
+game: Gunstar Future Heroes (Europe) (En,Ja,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Gunstar Future Heroes (Europe) (En,Ja,Fr,De,Es,It).gba
+assets.boxFront: ./media/boxFront/Gunstar Future Heroes (Europe) (En,Ja,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Gunstar Future Heroes (Europe) (En,Ja,Fr,De,Es,It).png
+
+game: Fire Emblem - The Sacred Stones (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Fire Emblem - The Sacred Stones.gba
+assets.boxFront: ./media/boxFront/Fire Emblem - The Sacred Stones (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Fire Emblem - The Sacred Stones (Europe) (En,Fr,De,Es,It).png
+
+game: Fire Emblem (Europe) (En,Es,It)
+file: /media/gonza/DISCO2/gba/Fire Emblem.gba
+assets.boxFront: ./media/boxFront/Fire Emblem (Europe) (En,Es,It).png
+assets.screenshot: ./media/screenshot/Fire Emblem (Europe) (En,Es,It).png
+
+game: Final Fantasy VI Advance (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Final Fantasy VI Advance.gba
+assets.boxFront: ./media/boxFront/Final Fantasy VI Advance (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Final Fantasy VI Advance (Europe) (En,Fr,De,Es,It).png
+
+game: Final Fantasy V Advance (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Final Fantasy V Advance.gba
+assets.boxFront: ./media/boxFront/Final Fantasy V Advance (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Final Fantasy V Advance (Europe) (En,Fr,De,Es,It).png
+
+game: Final Fantasy Tactics Advance (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Final Fantasy Tactics.gba
+assets.boxFront: ./media/boxFront/Final Fantasy Tactics Advance (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Final Fantasy Tactics Advance (Europe) (En,Fr,De,Es,It).png
+
+game: Final Fantasy IV Advance (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Final Fantasy IV.gba
+assets.boxFront: ./media/boxFront/Final Fantasy IV Advance (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Final Fantasy IV Advance (Europe) (En,Fr,De,Es,It).png
+
+game: Final Fantasy I & II - Dawn of Souls (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Final Fantasy I y II.gba
+assets.boxFront: ./media/boxFront/Final Fantasy I & II - Dawn of Souls (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Final Fantasy I & II - Dawn of Souls (Europe) (En,Fr,De,Es,It).png
+
+game: Dexter's Laboratory - Deesaster Strikes! (USA) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/El Laboratorio de Dexter.GBA
+assets.boxFront: ./media/boxFront/Dexter's Laboratory - Deesaster Strikes! (USA) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Dexter's Laboratory - Deesaster Strikes! (USA) (En,Fr,De,Es,It).png
+
+game: Drill Dozer (Europe) (En,Fr,De,Es,It) (Virtual Console)
+file: /media/gonza/DISCO2/gba/Drill Dozer.gba
+assets.boxFront: ./media/boxFront/Drill Dozer (Europe) (En,Fr,De,Es,It) (Virtual Console).png
+assets.screenshot: ./media/screenshot/Drill Dozer (Europe) (En,Fr,De,Es,It) (Virtual Console).png
+
+game: Dragon Ball Z - Supersonic Warriors (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Dragon Ball Z - Supersonic Warriors.gba
+assets.boxFront: ./media/boxFront/Dragon Ball Z - Supersonic Warriors (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Dragon Ball Z - Supersonic Warriors (Europe) (En,Fr,De,Es,It).png
+
+game: Dragon Ball - Advanced Adventure (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Dragon Ball - Advance adventure.gba
+assets.boxFront: ./media/boxFront/Dragon Ball - Advanced Adventure (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Dragon Ball - Advanced Adventure (Europe) (En,Fr,De,Es,It).png
+
+game: Donkey Kong Country 3 (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Donkey Kong Country 3.gba
+assets.boxFront: ./media/boxFront/Donkey Kong Country 3 (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Donkey Kong Country 3 (Europe) (En,Fr,De,Es,It).png
+
+game: Donkey Kong Country 2 (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Donkey Kong Country 2.gba
+assets.boxFront: ./media/boxFront/Donkey Kong Country 2 (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Donkey Kong Country 2 (Europe) (En,Fr,De,Es,It).png
+
+game: Donkey Kong Country (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Donkey Kong Country 1.gba
+assets.boxFront: ./media/boxFront/Donkey Kong Country (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Donkey Kong Country (Europe) (En,Fr,De,Es,It).png
+
+game: Donald Duck Advance (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Donald Duck Advance.gba
+assets.boxFront: ./media/boxFront/Donald Duck Advance (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Donald Duck Advance (Europe) (En,Fr,De,Es,It).png
+
+game: Crazy Taxi - Catch a Ride (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Crazy Taxi Catch a Ride.gba
+assets.boxFront: ./media/boxFront/Crazy Taxi - Catch a Ride (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Crazy Taxi - Catch a Ride (Europe) (En,Fr,De,Es,It).png
+
+game: Crash of the Titans (Europe) (En,Fr,De,Es,It,Nl)
+file: /media/gonza/DISCO2/gba/Crash of the Titans.gba
+assets.boxFront: ./media/boxFront/Crash of the Titans (Europe) (En,Fr,De,Es,It,Nl).png
+assets.screenshot: ./media/screenshot/Crash of the Titans (Europe) (En,Fr,De,Es,It,Nl).png
+
+game: Crash Bandicoot XS (Europe) (En,Fr,De,Es,It,Nl)
+file: /media/gonza/DISCO2/gba/Crash Bandicoot XS.gba
+assets.boxFront: ./media/boxFront/Crash Bandicoot XS (Europe) (En,Fr,De,Es,It,Nl).png
+assets.screenshot: ./media/screenshot/Crash Bandicoot XS (Europe) (En,Fr,De,Es,It,Nl).png
+
+game: Crash Bandicoot 2 - N-Tranced (Europe) (En,Fr,De,Es,It,Nl)
+file: /media/gonza/DISCO2/gba/Crash Bandicoot 2 N-Tranced.gba
+assets.boxFront: ./media/boxFront/Crash Bandicoot 2 - N-Tranced (Europe) (En,Fr,De,Es,It,Nl).png
+assets.screenshot: ./media/screenshot/Crash Bandicoot 2 - N-Tranced (Europe) (En,Fr,De,Es,It,Nl).png
+
+game: Batman Begins (USA, Europe) (En,Fr,De,Es,It,Nl)
+file: /media/gonza/DISCO2/gba/Batman Begins.gba
+assets.boxFront: ./media/boxFront/Batman Begins (USA, Europe) (En,Fr,De,Es,It,Nl).png
+assets.screenshot: ./media/screenshot/Batman Begins (USA, Europe) (En,Fr,De,Es,It,Nl).png
+
+game: Astro Boy - Omega Factor (Europe) (En,Ja,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Astroboy - Omega Factor.gba
+assets.boxFront: ./media/boxFront/Astro Boy - Omega Factor (Europe) (En,Ja,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Astro Boy - Omega Factor (Europe) (En,Ja,Fr,De,Es,It).png
+
+game: SpongeBob SquarePants - Creature from the Krusty Krab (Europe) (En,Fr,De,Es,It,Nl,Sv,Da)
+file: /media/gonza/DISCO2/gba/2562 - SpongeBob SquarePants - Creature from the Krusty Krab (E) (M8).gba
+assets.boxFront: ./media/boxFront/SpongeBob SquarePants - Creature from the Krusty Krab (Europe) (En,Fr,De,Es,It,Nl,Sv,Da).png
+assets.screenshot: ./media/screenshot/SpongeBob SquarePants - Creature from the Krusty Krab (Europe) (En,Fr,De,Es,It,Nl,Sv,Da).png
+
+game: Alien Hominid (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Alien Hominid.gba
+assets.boxFront: ./media/boxFront/Alien Hominid (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Alien Hominid (Europe) (En,Fr,De,Es,It).png
+
+game: SpongeBob SquarePants - Lights, Camera, Pants! (Europe) (En,Fr,De,Es,It,Nl,Sv)
+file: /media/gonza/DISCO2/gba/2237 - SpongeBob SquarePants - Lights, Camera, Pants! (E) (M7) [b].gba
+assets.boxFront: ./media/boxFront/SpongeBob SquarePants - Lights, Camera, Pants! (Europe) (En,Fr,De,Es,It,Nl,Sv).png
+assets.screenshot: ./media/screenshot/SpongeBob SquarePants - Lights, Camera, Pants! (Europe) (En,Fr,De,Es,It,Nl,Sv).png
+
+game: Sonic Battle (Europe) (En,Ja,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/1513 - Sonic Battle (E) (M6).gba
+assets.boxFront: ./media/boxFront/Sonic Battle (Europe) (En,Ja,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Sonic Battle (Europe) (En,Ja,Fr,De,Es,It).png
+
+game: Advance Wars 2 - Black Hole Rising (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/1155 - Advance Wars 2 - Black Hole Rising (E)(Surplus).gba
+assets.boxFront: ./media/boxFront/Advance Wars 2 - Black Hole Rising (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Advance Wars 2 - Black Hole Rising (Europe) (En,Fr,De,Es,It).png
+
+game: SpongeBob SquarePants - Revenge of the Flying Dutchman (USA, Europe)
+file: /media/gonza/DISCO2/gba/0592 - SpongeBob SquarePants - Revenge of the Flying Dutchman (UE).gba
+assets.boxFront: ./media/boxFront/SpongeBob SquarePants - Revenge of the Flying Dutchman (USA, Europe).png
+assets.screenshot: ./media/screenshot/SpongeBob SquarePants - Revenge of the Flying Dutchman (USA, Europe).png
+
+game: Advance Wars (Europe) (En,Fr,De,Es)
+file: /media/gonza/DISCO2/gba/0263 - Advance Wars (E)(Arrogance).gba
+assets.boxFront: ./media/boxFront/Advance Wars (Europe) (En,Fr,De,Es).png
+assets.screenshot: ./media/screenshot/Advance Wars (Europe) (En,Fr,De,Es).png
+
+game: SpongeBob SquarePants - SuperSponge (USA, Europe)
+file: /media/gonza/DISCO2/gba/0177 - SpongeBob SquarePants - SuperSponge (U).gba
+assets.boxFront: ./media/boxFront/SpongeBob SquarePants - SuperSponge (USA, Europe).png
+assets.screenshot: ./media/screenshot/SpongeBob SquarePants - SuperSponge (USA, Europe).png
+
+game: Pokemon - Edicion Verde Hoja (Spain)
+file: /media/gonza/DISCO2/gba/Pokemon - Edicion Verde Hoja (Spain).zip
+assets.boxFront: ./media/boxFront/Pokemon - Edicion Verde Hoja (Spain).png
+assets.screenshot: ./media/screenshot/Pokemon - Edicion Verde Hoja (Spain).png
+
+game: Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It) (Rev 1)
+file: /media/gonza/DISCO2/gba/Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It) (Rev 1).zip
+assets.boxFront: ./media/boxFront/Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It) (Rev 1).png
+assets.screenshot: ./media/screenshot/Super Mario Advance 4 - Super Mario Bros. 3 (Europe) (En,Fr,De,Es,It) (Rev 1).png
+
+game: WarioWare, Inc. - Minigame Mania (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/WarioWare, Inc. - Minigame Mania (Europe) (En,Fr,De,Es,It).zip
+assets.boxFront: ./media/boxFront/WarioWare, Inc. - Minigame Mania (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/WarioWare, Inc. - Minigame Mania (Europe) (En,Fr,De,Es,It).png
+
+game: Metroid - Zero Mission (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Metroid - Zero Mission (Europe) (En,Fr,De,Es,It).zip
+assets.boxFront: ./media/boxFront/Metroid - Zero Mission (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Metroid - Zero Mission (Europe) (En,Fr,De,Es,It).png
+
+game: Kirby & The Amazing Mirror (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Kirby & the Amazing Mirror (Europe) (En,Fr,De,Es,It).zip
+assets.boxFront: ./media/boxFront/Kirby & The Amazing Mirror (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Kirby & The Amazing Mirror (Europe) (En,Fr,De,Es,It).png
+
+game: Sonic Advance (Europe) (En,Ja,Fr,De,Es)
+file: /media/gonza/DISCO2/gba/Sonic Advance (Europe) (En,Ja,Fr,De,Es).zip
+assets.boxFront: ./media/boxFront/Sonic Advance (Europe) (En,Ja,Fr,De,Es).png
+assets.screenshot: ./media/screenshot/Sonic Advance (Europe) (En,Ja,Fr,De,Es).png
+
+game: Metroid Fusion (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Metroid Fusion (Europe) (En,Fr,De,Es,It).zip
+assets.boxFront: ./media/boxFront/Metroid Fusion (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Metroid Fusion (Europe) (En,Fr,De,Es,It).png
+
+game: Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It).zip
+assets.boxFront: ./media/boxFront/Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Super Mario Advance 3 - Yoshi's Island (Europe) (En,Fr,De,Es,It).png
+
+game: Gunstar Future Heroes (Europe) (En,Ja,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Gunstar Future Heroes (Europe) (En,Ja,Fr,De,Es,It).zip
+assets.boxFront: ./media/boxFront/Gunstar Future Heroes (Europe) (En,Ja,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Gunstar Future Heroes (Europe) (En,Ja,Fr,De,Es,It).png
+
+game: Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es)
+file: /media/gonza/DISCO2/gba/Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es).zip
+assets.boxFront: ./media/boxFront/Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es).png
+assets.screenshot: ./media/screenshot/Super Mario Advance 2 - Super Mario World (Europe) (En,Fr,De,Es).png
+
+game: Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It)
+file: /media/gonza/DISCO2/gba/Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It).zip
+assets.boxFront: ./media/boxFront/Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It).png
+assets.screenshot: ./media/screenshot/Mario vs. Donkey Kong (Europe) (En,Fr,De,Es,It).png

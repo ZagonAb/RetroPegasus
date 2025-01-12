@@ -152,6 +152,48 @@ def print_menu():
     """
     print(menu)
 
+def get_output_path():
+    while True:
+        print(f"\n{Fore.YELLOW}Seleccione la ubicación para guardar los datos de Pegasus Frontend:{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}[1]{Style.RESET_ALL} Usar ubicación predeterminada en Linux (~/pegasus-frontend)")
+        print(f"{Fore.YELLOW}[2]{Style.RESET_ALL} Especificar ruta personalizada")
+
+        choice = input(f"\n{Fore.YELLOW}Seleccione una opción (1-2): {Style.RESET_ALL}")
+
+        if choice == "1":
+            output_path = os.path.expanduser("~/pegasus-frontend")
+        elif choice == "2":
+            base_path = input(f"\n{Fore.YELLOW}Ingrese la ruta donde desea crear la carpeta pegasus-frontend: {Style.RESET_ALL}")
+            base_path = os.path.expanduser(base_path)
+
+            if not os.path.exists(base_path):
+                print(f"{Fore.RED}La ruta {base_path} no existe.{Style.RESET_ALL}")
+                continue
+
+            output_path = os.path.join(base_path, "pegasus-frontend")
+        else:
+            print(f"{Fore.RED}Opción inválida. Por favor, seleccione 1 o 2.{Style.RESET_ALL}")
+            continue
+
+        if os.path.exists(output_path):
+            print(f"\n{Fore.YELLOW}Se encontró una carpeta pegasus-frontend existente en:{Style.RESET_ALL}")
+            print(f"{Fore.YELLOW}{output_path}{Style.RESET_ALL}")
+            confirm = input(f"{Fore.YELLOW}¿Desea sobrescribir su contenido? (s/n): {Style.RESET_ALL}").lower()
+
+            if confirm != 's':
+                continue
+
+            print(f"\n{Fore.YELLOW}⚠️  Advertencia: El contenido existente en {output_path} será sobrescrito.{Style.RESET_ALL}")
+        else:
+            try:
+                os.makedirs(output_path)
+                print(f"\n{Fore.GREEN}✓ Creada nueva carpeta: {output_path}{Style.RESET_ALL}")
+            except Exception as e:
+                print(f"{Fore.RED}Error al crear la carpeta: {e}{Style.RESET_ALL}")
+                continue
+
+        return output_path
+
 def get_system_paths():
     system = platform.system()
     if system == "Windows":
@@ -294,13 +336,11 @@ def copy_images(src, dest):
     for file in tqdm(png_files, desc=f"Copiando imágenes en {os.path.basename(dest)}", unit="imagen", leave=False):
         shutil.copy2(os.path.join(src, file), dest)
 
-def process_thumbnails(thumbnails_path):
-    home_path = os.path.expanduser("~/pegasus-frontend")  # Carpeta principal Pegasus
-    os.makedirs(home_path, exist_ok=True)
+def process_thumbnails(thumbnails_path, output_path):
+    os.makedirs(output_path, exist_ok=True)
 
     print(f"\n{Fore.YELLOW}Procesando miniaturas...{Style.RESET_ALL}")
 
-    # Obtener todos los sistemas válidos primero
     valid_systems = []
     for system_folder in os.listdir(thumbnails_path):
         system_path = os.path.join(thumbnails_path, system_folder)
@@ -321,14 +361,13 @@ def process_thumbnails(thumbnails_path):
             valid_systems.append((system_folder, shortname, boxarts_path, snaps_path))
 
     for system_folder, shortname, boxarts_path, snaps_path in tqdm(valid_systems, desc="Procesando sistemas", unit="sistema"):
-        target_system_path = os.path.join(home_path, shortname, "media")
+        target_system_path = os.path.join(output_path, shortname, "media")
         os.makedirs(os.path.join(target_system_path, "boxFront"), exist_ok=True)
         os.makedirs(os.path.join(target_system_path, "screenshot"), exist_ok=True)
 
         copy_images(boxarts_path, os.path.join(target_system_path, "boxFront"))
         copy_images(snaps_path, os.path.join(target_system_path, "screenshot"))
 
-"""
 def generate_metadata_files(playlists_path, pegasus_home):
     print(f"\n{Fore.YELLOW}Generando archivos metadata.txt...{Style.RESET_ALL}")
 
@@ -338,7 +377,7 @@ def generate_metadata_files(playlists_path, pegasus_home):
         if not playlist_file.endswith('.lpl'):
             continue
 
-        system_name = playlist_file[:-4]  # Quitar extensión .lpl
+        system_name = playlist_file[:-4]
         shortname = SYSTEM_SHORTNAMES.get(system_name)
 
         if not shortname:
@@ -371,77 +410,8 @@ def generate_metadata_files(playlists_path, pegasus_home):
             full_path = item.get('path', '')
             rom_path = full_path.split('#')[0] if '#' in full_path else full_path
 
-            if rom_path.startswith('/'):
-                rom_path = f".{rom_path}"
-            elif not rom_path.startswith('/'):
-                rom_path = f"./{rom_path}"
-
-            game_name = item.get('label', '')
-            if not game_name or not rom_path:
-                continue
-
-            metadata_content.extend([
-                f"game: {game_name}",
-                f"file: {rom_path}",
-                f"assets.boxFront: ./media/boxFront/{game_name}.png",
-                f"assets.screenshot: ./media/screenshot/{game_name}.png\n"
-            ])
-
-        system_path = os.path.join(pegasus_home, shortname)
-        os.makedirs(system_path, exist_ok=True)
-
-        metadata_path = os.path.join(system_path, "metadata.txt")
-        with open(metadata_path, 'w', encoding='utf-8') as f:
-            f.write('\n'.join(metadata_content))
-
-        print(f"{Fore.GREEN}Metadata generada para {system_name}{Style.RESET_ALL}")
-"""
-
-def generate_metadata_files(playlists_path, pegasus_home):
-    print(f"\n{Fore.YELLOW}Generando archivos metadata.txt...{Style.RESET_ALL}")
-
-    launch_cmd = get_launch_command()
-
-    for playlist_file in tqdm(os.listdir(playlists_path), desc="Procesando playlists", unit="playlist"):
-        if not playlist_file.endswith('.lpl'):
-            continue
-
-        system_name = playlist_file[:-4]  # Quitar extensión .lpl
-        shortname = SYSTEM_SHORTNAMES.get(system_name)
-
-        if not shortname:
-            print(f"{Fore.YELLOW}Sistema no reconocido: {system_name}, saltando.{Style.RESET_ALL}")
-            continue
-
-        try:
-            with open(os.path.join(playlists_path, playlist_file), 'r', encoding='utf-8') as f:
-                playlist_data = json.load(f)
-        except (json.JSONDecodeError, FileNotFoundError) as e:
-            print(f"{Fore.RED}Error leyendo playlist {playlist_file}: {e}{Style.RESET_ALL}")
-            continue
-
-        if 'items' not in playlist_data:
-            continue
-
-        core_path = "DETECT"
-        for item in playlist_data['items']:
-            if item.get('core_path') and item['core_path'] != "DETECT":
-                core_path = item['core_path']
-                break
-
-        metadata_content = [
-            f"collection: {system_name}",
-            f"shortname: {shortname}",
-            f"launch: {launch_cmd} -L {core_path} {{file.path}}\n"
-        ]
-
-        for item in playlist_data['items']:
-            full_path = item.get('path', '')
-            rom_path = full_path.split('#')[0] if '#' in full_path else full_path
-
-            # Modificación: asegurar que la ruta comience con / y eliminar ./ si existe
             if rom_path.startswith('./'):
-                rom_path = rom_path[2:]  # Eliminar './' del inicio
+                rom_path = rom_path[2:]
             if not rom_path.startswith('/'):
                 rom_path = '/' + rom_path
 
@@ -505,10 +475,11 @@ def main():
                 input("\nPresione Enter para continuar...")
                 continue
 
-            # Procesar las miniaturas y generar los metadatos
-            home_path = os.path.expanduser("~/pegasus-frontend")
-            process_thumbnails(thumbnails_path)
-            generate_metadata_files(playlists_path, home_path)
+            output_path = get_output_path()
+
+            process_thumbnails(thumbnails_path, output_path)
+            generate_metadata_files(playlists_path, output_path)
+
 
             print(f"\n{Fore.GREEN}¡Conversión completada con éxito!{Style.RESET_ALL}")
             input("\nPresione Enter para continuar...")

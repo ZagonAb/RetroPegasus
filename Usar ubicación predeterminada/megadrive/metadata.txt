@@ -1,0 +1,93 @@
+collection: Sega - Mega Drive - Genesis
+shortname: megadrive
+launch: flatpak run org.libretro.RetroArch -L DETECT {file.path}
+
+game: Doom Troopers (USA)
+file: /media/gonza/DISCO2/megadrive/Doom Troopers (USA).zip
+assets.boxFront: ./media/boxFront/Doom Troopers (USA).png
+assets.screenshot: ./media/screenshot/Doom Troopers (USA).png
+
+game: Jungle Book, The (USA)
+file: /media/gonza/DISCO2/megadrive/Jungle Book, The (USA).zip
+assets.boxFront: ./media/boxFront/Jungle Book, The (USA).png
+assets.screenshot: ./media/screenshot/Jungle Book, The (USA).png
+
+game: Mega Turrican (USA)
+file: /media/gonza/DISCO2/megadrive/Mega Turrican (USA).zip
+assets.boxFront: ./media/boxFront/Mega Turrican (USA).png
+assets.screenshot: ./media/screenshot/Mega Turrican (USA).png
+
+game: Mercs (World)
+file: /media/gonza/DISCO2/megadrive/Senjou no Ookami II ~ Mercs (World).zip
+assets.boxFront: ./media/boxFront/Mercs (World).png
+assets.screenshot: ./media/screenshot/Mercs (World).png
+
+game: Punisher, The (Europe)
+file: /media/gonza/DISCO2/megadrive/Punisher, The (Europe).zip
+assets.boxFront: ./media/boxFront/Punisher, The (Europe).png
+assets.screenshot: ./media/screenshot/Punisher, The (Europe).png
+
+game: X-Men (USA)
+file: /media/gonza/DISCO2/megadrive/X-Men (USA).zip
+assets.boxFront: ./media/boxFront/X-Men (USA).png
+assets.screenshot: ./media/screenshot/X-Men (USA).png
+
+game: Vectorman 2 (USA)
+file: /media/gonza/DISCO2/megadrive/Vectorman 2 (USA).zip
+assets.boxFront: ./media/boxFront/Vectorman 2 (USA).png
+assets.screenshot: ./media/screenshot/Vectorman 2 (USA).png
+
+game: RoboCop Versus The Terminator (USA)
+file: /media/gonza/DISCO2/megadrive/RoboCop versus The Terminator (USA).zip
+assets.boxFront: ./media/boxFront/RoboCop Versus The Terminator (USA).png
+assets.screenshot: ./media/screenshot/RoboCop Versus The Terminator (USA).png
+
+game: Spider-Man . Venom - Maximum Carnage (World)
+file: /media/gonza/DISCO2/megadrive/Spider-Man . Venom - Maximum Carnage (World).zip
+assets.boxFront: ./media/boxFront/Spider-Man . Venom - Maximum Carnage (World).png
+assets.screenshot: ./media/screenshot/Spider-Man . Venom - Maximum Carnage (World).png
+
+game: Vectorman (USA, Europe)
+file: /media/gonza/DISCO2/megadrive/Vectorman (USA, Europe).zip
+assets.boxFront: ./media/boxFront/Vectorman (USA, Europe).png
+assets.screenshot: ./media/screenshot/Vectorman (USA, Europe).png
+
+game: Castle of Illusion Starring Mickey Mouse (USA, Europe)
+file: /media/gonza/DISCO2/megadrive/Castle of Illusion Starring Mickey Mouse (USA, Europe).zip
+assets.boxFront: ./media/boxFront/Castle of Illusion Starring Mickey Mouse (USA, Europe).png
+assets.screenshot: ./media/screenshot/Castle of Illusion Starring Mickey Mouse (USA, Europe).png
+
+game: Sunset Riders (USA)
+file: /media/gonza/DISCO2/megadrive/Sunset Riders (USA).zip
+assets.boxFront: ./media/boxFront/Sunset Riders (USA).png
+assets.screenshot: ./media/screenshot/Sunset Riders (USA).png
+
+game: Sonic The Hedgehog 2 (World) (Rev A)
+file: /media/gonza/DISCO2/megadrive/Sonic The Hedgehog 2 (World) (Rev A).zip
+assets.boxFront: ./media/boxFront/Sonic The Hedgehog 2 (World) (Rev A).png
+assets.screenshot: ./media/screenshot/Sonic The Hedgehog 2 (World) (Rev A).png
+
+game: OutRun (USA, Europe)
+file: /media/gonza/DISCO2/megadrive/OutRun (USA, Europe).zip
+assets.boxFront: ./media/boxFront/OutRun (USA, Europe).png
+assets.screenshot: ./media/screenshot/OutRun (USA, Europe).png
+
+game: Sonic & Knuckles
+file: /media/gonza/DISCO2/megadrive/Sonic & Knuckles (World).zip
+assets.boxFront: ./media/boxFront/Sonic & Knuckles.png
+assets.screenshot: ./media/screenshot/Sonic & Knuckles.png
+
+game: Sonic & Knuckles + Sonic The Hedgehog 3 (USA) (Lock-on Combination)
+file: /media/gonza/DISCO2/megadrive/Sonic & Knuckles + Sonic The Hedgehog 3 (World).zip
+assets.boxFront: ./media/boxFront/Sonic & Knuckles + Sonic The Hedgehog 3 (USA) (Lock-on Combination).png
+assets.screenshot: ./media/screenshot/Sonic & Knuckles + Sonic The Hedgehog 3 (USA) (Lock-on Combination).png
+
+game: Streets of Rage 2 (USA)
+file: /media/gonza/DISCO2/megadrive/Streets of Rage 2 (USA).zip
+assets.boxFront: ./media/boxFront/Streets of Rage 2 (USA).png
+assets.screenshot: ./media/screenshot/Streets of Rage 2 (USA).png
+
+game: Sonic The Hedgehog (USA, Europe)
+file: /media/gonza/DISCO2/megadrive/Sonic The Hedgehog (USA, Europe).zip
+assets.boxFront: ./media/boxFront/Sonic The Hedgehog (USA, Europe).png
+assets.screenshot: ./media/screenshot/Sonic The Hedgehog (USA, Europe).png

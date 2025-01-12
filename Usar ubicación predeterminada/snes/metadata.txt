@@ -1,0 +1,8 @@
+collection: Nintendo - Super Nintendo Entertainment System
+shortname: snes
+launch: flatpak run org.libretro.RetroArch -L DETECT {file.path}
+
+game: Terminator 2 - Judgment Day (USA)
+file: /media/gonza/DISCO2/gamegear/Terminator 2 - Judgment Day (U).zip
+assets.boxFront: ./media/boxFront/Terminator 2 - Judgment Day (USA).png
+assets.screenshot: ./media/screenshot/Terminator 2 - Judgment Day (USA).png

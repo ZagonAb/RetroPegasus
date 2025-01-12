@@ -1,0 +1,33 @@
+collection: Nintendo - Family Computer Disk System
+shortname: ndisk
+launch: flatpak run org.libretro.RetroArch -L DETECT {file.path}
+
+game: Dracula II - Noroi no Fuuin (Japan)
+file: /media/gonza/DISCO2/nds/nesdisk/Dracula II - Noroi no Fuuin (Japan).zip
+assets.boxFront: ./media/boxFront/Dracula II - Noroi no Fuuin (Japan).png
+assets.screenshot: ./media/screenshot/Dracula II - Noroi no Fuuin (Japan).png
+
+game: Zelda no Densetsu - The Hyrule Fantasy (Japan)
+file: /media/gonza/DISCO2/nds/nesdisk/Zelda no Densetsu - The Hyrule Fantasy (Japan) (v1.0).zip
+assets.boxFront: ./media/boxFront/Zelda no Densetsu - The Hyrule Fantasy (Japan).png
+assets.screenshot: ./media/screenshot/Zelda no Densetsu - The Hyrule Fantasy (Japan).png
+
+game: Link no Bouken - The Legend of Zelda 2 (Japan) (v1
+file: /media/gonza/DISCO2/nds/nesdisk/Link no Bouken - The Legend of Zelda 2 (Japan) (v1.1).zip
+assets.boxFront: ./media/boxFront/Link no Bouken - The Legend of Zelda 2 (Japan) (v1.png
+assets.screenshot: ./media/screenshot/Link no Bouken - The Legend of Zelda 2 (Japan) (v1.png
+
+game: Super Mario Bros. (Japan)
+file: /media/gonza/DISCO2/nds/nesdisk/Super Mario Brothers (Japan).zip
+assets.boxFront: ./media/boxFront/Super Mario Bros. (Japan).png
+assets.screenshot: ./media/screenshot/Super Mario Bros. (Japan).png
+
+game: Super Mario Bros. 2 (Japan) (En)
+file: /media/gonza/DISCO2/nds/nesdisk/Super Mario Brothers 2 (Japan).zip
+assets.boxFront: ./media/boxFront/Super Mario Bros. 2 (Japan) (En).png
+assets.screenshot: ./media/screenshot/Super Mario Bros. 2 (Japan) (En).png
+
+game: Akumajou Dracula (Japan) (v1
+file: /media/gonza/DISCO2/nds/nesdisk/Akumajou Dracula (Japan) (v1.2) [b].zip
+assets.boxFront: ./media/boxFront/Akumajou Dracula (Japan) (v1.png
+assets.screenshot: ./media/screenshot/Akumajou Dracula (Japan) (v1.png
