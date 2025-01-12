@@ -167,10 +167,11 @@ def get_system_paths():
             os.path.expanduser("~/snap/retroarch/current/retroarch"),
             os.path.expanduser("~/.config/retroarch")
         ]
-    elif system == "Darwin":  # macOS
+    elif system == "Darwin":
         return [
             os.path.expanduser("~/Library/Application Support/RetroArch"),
-            "/Applications/RetroArch.app"
+            "/Applications/RetroArch.app",
+            os.path.expanduser("~/Applications/RetroArch.app")
         ]
     return []
 
@@ -207,7 +208,7 @@ def get_launch_command():
     system = platform.system()
     if system == "Windows":
         return "retroarch.exe"
-    elif system == "Darwin":  # macOS
+    elif system == "Darwin":
         return "open -a RetroArch --args"
     else:  # Linux
         if os.path.exists("/usr/bin/retroarch"):
