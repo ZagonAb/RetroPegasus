@@ -6,6 +6,7 @@ import json
 from tqdm import tqdm
 from colorama import init, Fore, Style
 import sys
+import re
 
 init()
 
@@ -245,27 +246,9 @@ def verify_retroarch_folders(path):
 
     return all_valid, errors
 
-"""
 def get_launch_command():
     system = platform.system()
     if system == "Windows":
-        return "retroarch.exe"
-    elif system == "Darwin":
-        return "open -a RetroArch --args"
-    else:  # Linux
-        if os.path.exists("/usr/bin/retroarch"):
-            return "retroarch"
-        elif os.path.exists(os.path.expanduser("~/.var/app/org.libretro.RetroArch")):
-            return "flatpak run org.libretro.RetroArch"
-        elif os.path.exists(os.path.expanduser("~/snap/retroarch")):
-            return "snap run retroarch"
-    return "retroarch"
-"""
-
-def get_launch_command():
-    system = platform.system()
-    if system == "Windows":
-        # Posibles ubicaciones de RetroArch en Windows
         possible_paths = [
             os.path.join(os.getenv('PROGRAMFILES'), "RetroArch", "retroarch.exe"),
             os.path.join(os.getenv('PROGRAMFILES(X86)'), "RetroArch", "retroarch.exe"),
@@ -273,16 +256,14 @@ def get_launch_command():
             os.path.join(os.getenv('LOCALAPPDATA'), "RetroArch", "retroarch.exe")
         ]
 
-        # Buscar RetroArch en las ubicaciones posibles
         for path in possible_paths:
             if os.path.exists(path):
-                # Envolver la ruta en comillas para manejar espacios
+
                 return f'"{path}"'
 
-        # Si no se encuentra, usar solo el ejecutable (asumiendo que está en PATH)
         return "retroarch.exe"
 
-    elif system == "Darwin":  # macOS
+    elif system == "Darwin":
         return "open -a RetroArch --args"
     else:  # Linux
         if os.path.exists("/usr/bin/retroarch"):
@@ -404,6 +385,7 @@ def generate_metadata_files(playlists_path, pegasus_home):
     print(f"\n{Fore.YELLOW}Generando archivos metadata.txt...{Style.RESET_ALL}")
 
     launch_cmd = get_launch_command()
+    system_type = platform.system()
 
     for playlist_file in tqdm(os.listdir(playlists_path), desc="Procesando playlists", unit="playlist"):
         if not playlist_file.endswith('.lpl'):
@@ -442,10 +424,32 @@ def generate_metadata_files(playlists_path, pegasus_home):
             full_path = item.get('path', '')
             rom_path = full_path.split('#')[0] if '#' in full_path else full_path
 
-            if rom_path.startswith('./'):
-                rom_path = rom_path[2:]
-            if not rom_path.startswith('/'):
-                rom_path = '/' + rom_path
+            # Limpieza y normalización de la ruta según el sistema operativo
+            if system_type == "Windows":
+                # Eliminar ./ del inicio si existe
+                if rom_path.startswith('./'):
+                    rom_path = rom_path[2:]
+
+                # Eliminar / del inicio si existe
+                if rom_path.startswith('/'):
+                    rom_path = rom_path[1:]
+
+                # Asegurar que usamos backslashes en Windows
+                rom_path = rom_path.replace('/', '\\')
+
+                # Si la ruta no comienza con letra de unidad (C:\, D:\, etc.)
+                if not re.match(r'^[A-Za-z]:\\', rom_path):
+                    # Añadir C:\ por defecto si no hay letra de unidad
+                    rom_path = 'C:\\' + rom_path
+            else:
+                # Para Linux/macOS
+                if rom_path.startswith('./'):
+                    rom_path = rom_path[2:]
+                if not rom_path.startswith('/'):
+                    rom_path = '/' + rom_path
+
+                # Asegurar que usamos forward slashes en Linux/macOS
+                rom_path = rom_path.replace('\\', '/')
 
             game_name = item.get('label', '')
             if not game_name or not rom_path:
