@@ -1,8 +1,14 @@
 import os
+import platform
 import shutil
 import time
 import json
 from tqdm import tqdm
+from colorama import init, Fore, Style
+import sys
+
+# Inicializar colorama para Windows
+init()
 
 SYSTEM_SHORTNAMES = {
   "Amstrad - CPC": "amstradcpc",
@@ -129,153 +135,219 @@ SYSTEM_SHORTNAMES = {
   "Wolfenstein 3D": "wolfenstein"
 }
 
-def find_retroarch():
-    paths = [
-        "/usr/bin/retroarch",  # Instalado con apt
-        os.path.expanduser("~/.var/app/org.libretro.RetroArch/config/retroarch/"),  # Flatpak
-        os.path.expanduser("~/snap/retroarch/current/retroarch"),  # Snap
-        os.path.expanduser("~/.config/retroarch") #apt
+def print_banner():
+    banner = f"""
+    {Fore.CYAN}╔══════════════════════════════════════════════╗
+    ║          RetroPegasus Converter Tool         ║
+    ║     RetroArch → Pegasus Frontend Migration   ║
+    ╚══════════════════════════════════════════════╝{Style.RESET_ALL}
+    """
+    print(banner)
 
-    ]
+def print_menu():
+    menu = f"""
+    {Fore.YELLOW}[1]{Style.RESET_ALL} Escanear instalación de RetroArch
+    {Fore.YELLOW}[2]{Style.RESET_ALL} Introducir ruta personalizada
+    {Fore.YELLOW}[3]{Style.RESET_ALL} Salir
+    """
+    print(menu)
 
-    for path in paths:
-        if os.path.exists(path):
-            print(f"RetroArch encontrado: {path}")
-            return os.path.dirname(path)
-    return None
+def get_system_paths():
+    system = platform.system()
+    if system == "Windows":
+        return [
+            os.path.join(os.getenv('APPDATA'), "RetroArch"),
+            "C:\\Program Files\\RetroArch",
+            "C:\\Program Files (x86)\\RetroArch"
+        ]
+    elif system == "Linux":
+        return [
+            "/usr/bin/retroarch",
+            os.path.expanduser("~/.var/app/org.libretro.RetroArch/config/retroarch/"),
+            os.path.expanduser("~/snap/retroarch/current/retroarch"),
+            os.path.expanduser("~/.config/retroarch")
+        ]
+    elif system == "Darwin":  # macOS
+        return [
+            os.path.expanduser("~/Library/Application Support/RetroArch"),
+            "/Applications/RetroArch.app"
+        ]
+    return []
 
-def find_thumbnails_path(base_path):
-    possible_paths = [
-        os.path.expanduser("~/.config/retroarch/thumbnails"),  # Ruta estándar para apt
-        os.path.expanduser("~/.var/app/org.libretro.RetroArch/config/retroarch/thumbnails"),  # Flatpak
-        os.path.expanduser("~/snap/retroarch/current/.config/retroarch/thumbnails")  # Snap
-    ]
+def verify_retroarch_folders(path):
+    """
+    Verifica que existan las carpetas necesarias en la ruta proporcionada
+    Retorna una tupla de (bool, list) donde bool indica si todo está correcto
+    y list contiene los mensajes de error si los hay
+    """
+    required_folders = {
+        'thumbnails': False,
+        'playlists': False
+    }
 
-    for path in possible_paths:
-        if os.path.exists(path):
-            print(f"Carpeta 'thumbnails' encontrada: {path}")
-            return path
-    return None
+    errors = []
 
-def find_playlists_path():
-    possible_paths = [
-        os.path.expanduser("~/.config/retroarch/playlists"),  # Ruta estándar para apt
-        os.path.expanduser("~/.var/app/org.libretro.RetroArch/config/retroarch/playlists"),  # Flatpak
-        os.path.expanduser("~/snap/retroarch/current/.config/retroarch/playlists")  # Snap
-    ]
+    # Verificar la existencia de las carpetas requeridas
+    for folder in required_folders:
+        folder_path = os.path.join(path, folder)
+        if os.path.exists(folder_path) and os.path.isdir(folder_path):
+            # Verificar que las carpetas no estén vacías
+            if len(os.listdir(folder_path)) > 0:
+                required_folders[folder] = True
+            else:
+                errors.append(f"La carpeta '{folder}' está vacía")
+        else:
+            errors.append(f"No se encontró la carpeta '{folder}'")
 
-    for path in possible_paths:
-        if os.path.exists(path) and os.path.isdir(path):
-            if len(os.listdir(path)) > 0:
-                print(f"Carpeta 'playlists' encontrada: {path}")
-                return path
-    return None
+    all_valid = all(required_folders.values())
+
+    return all_valid, errors
 
 def get_launch_command():
-    if os.path.exists("/usr/bin/retroarch"):
-        return "retroarch"
-    elif os.path.exists(os.path.expanduser("~/.var/app/org.libretro.RetroArch")):
-        return "flatpak run org.libretro.RetroArch"
-    elif os.path.exists(os.path.expanduser("~/snap/retroarch")):
-        return "snap run retroarch"
+    system = platform.system()
+    if system == "Windows":
+        return "retroarch.exe"
+    elif system == "Darwin":  # macOS
+        return "open -a RetroArch --args"
+    else:  # Linux
+        if os.path.exists("/usr/bin/retroarch"):
+            return "retroarch"
+        elif os.path.exists(os.path.expanduser("~/.var/app/org.libretro.RetroArch")):
+            return "flatpak run org.libretro.RetroArch"
+        elif os.path.exists(os.path.expanduser("~/snap/retroarch")):
+            return "snap run retroarch"
     return "retroarch"
 
-def process_thumbnails(thumbnails_path):
-    home_path = os.path.expanduser("~/pegasus-frontend")  # Carpeta principal Pegasus
-    os.makedirs(home_path, exist_ok=True)
+def find_retroarch_auto():
+    system = platform.system()
+    print(f"\n{Fore.CYAN}Detectado sistema operativo: {system}{Style.RESET_ALL}")
 
-    # Obtener todos los sistemas válidos primero
-    valid_systems = []
-    for system_folder in os.listdir(thumbnails_path):
-        system_path = os.path.join(thumbnails_path, system_folder)
-        if os.path.isdir(system_path):
-            # Verificar si el sistema tiene un shortname definido
-            shortname = SYSTEM_SHORTNAMES.get(system_folder)
-            if not shortname:
-                print(f"Sistema no reconocido: {system_folder}, saltando.")
-                continue
+    paths = get_system_paths()
+    print(f"\n{Fore.YELLOW}Buscando instalaciones de RetroArch...{Style.RESET_ALL}")
 
-            boxarts_path = os.path.join(system_path, "Named_Boxarts")
-            snaps_path = os.path.join(system_path, "Named_Snaps")
+    found_paths = []
+    for path in paths:
+        if os.path.exists(path):
+            found_paths.append(path)
+            print(f"{Fore.GREEN}✓ Encontrado RetroArch en: {path}{Style.RESET_ALL}")
 
-            # Verificar que existan y tengan archivos .png
-            if not (os.path.exists(boxarts_path) and os.listdir(boxarts_path)):
-                continue
-            if not (os.path.exists(snaps_path) and os.listdir(snaps_path)):
-                continue
+    if not found_paths:
+        print(f"{Fore.RED}No se encontraron instalaciones de RetroArch.{Style.RESET_ALL}")
+        return None
 
-            valid_systems.append((system_folder, shortname, boxarts_path, snaps_path))
+    if len(found_paths) > 1:
+        print(f"\n{Fore.YELLOW}Se encontraron múltiples instalaciones. Por favor seleccione una:{Style.RESET_ALL}")
+        for i, path in enumerate(found_paths, 1):
+            print(f"{Fore.YELLOW}[{i}]{Style.RESET_ALL} {path}")
 
-    # Usar tqdm para mostrar progreso general
-    for system_folder, shortname, boxarts_path, snaps_path in tqdm(valid_systems, desc="Procesando sistemas", unit="sistema"):
-        # Crear estructura en pegasus-frontend usando el shortname
-        target_system_path = os.path.join(home_path, shortname, "media")
-        os.makedirs(os.path.join(target_system_path, "boxFront"), exist_ok=True)
-        os.makedirs(os.path.join(target_system_path, "screenshot"), exist_ok=True)
-        os.makedirs(os.path.join(target_system_path, "videos"), exist_ok=True)
-        os.makedirs(os.path.join(target_system_path, "wheel"), exist_ok=True)
+        while True:
+            try:
+                choice = int(input("\nSeleccione una opción (número): "))
+                if 1 <= choice <= len(found_paths):
+                    return found_paths[choice - 1]
+                print(f"{Fore.RED}Opción inválida. Intente nuevamente.{Style.RESET_ALL}")
+            except ValueError:
+                print(f"{Fore.RED}Por favor, ingrese un número válido.{Style.RESET_ALL}")
 
-        # Copiar imágenes de Boxarts
-        copy_images(boxarts_path, os.path.join(target_system_path, "boxFront"))
+    return found_paths[0]
 
-        # Copiar imágenes de Snaps
-        copy_images(snaps_path, os.path.join(target_system_path, "screenshot"))
-    home_path = os.path.expanduser("~/pegasus-frontend")  # Carpeta principal Pegasus
-    os.makedirs(home_path, exist_ok=True)
+def get_custom_path():
+    while True:
+        path = input(f"\n{Fore.YELLOW}Ingrese la ruta de instalación de RetroArch: {Style.RESET_ALL}")
+        if not os.path.exists(path):
+            print(f"{Fore.RED}La ruta ingresada no existe. Por favor, verifique e intente nuevamente.{Style.RESET_ALL}")
+            continue
 
-    valid_systems = []
-    for system_folder in os.listdir(thumbnails_path):
-        system_path = os.path.join(thumbnails_path, system_folder)
-        if os.path.isdir(system_path):
-            shortname = SYSTEM_SHORTNAMES.get(system_folder)
-            if not shortname:
-                print(f"Sistema no reconocido: {system_folder}, saltando.")
-                continue
+        # Verificar que la ruta contenga las carpetas necesarias
+        is_valid, errors = verify_retroarch_folders(path)
 
-            boxarts_path = os.path.join(system_path, "Named_Boxarts")
-            snaps_path = os.path.join(system_path, "Named_Snaps")
+        if not is_valid:
+            print(f"\n{Fore.RED}La ruta no contiene una instalación válida de RetroArch:{Style.RESET_ALL}")
+            for error in errors:
+                print(f"{Fore.RED}• {error}{Style.RESET_ALL}")
 
-            if not (os.path.exists(boxarts_path) and os.listdir(boxarts_path)):
-                continue
-            if not (os.path.exists(snaps_path) and os.listdir(snaps_path)):
-                continue
+            retry = input(f"\n{Fore.YELLOW}¿Desea intentar con otra ruta? (s/n): {Style.RESET_ALL}").lower()
+            if retry != 's':
+                return None
+            continue
 
-            valid_systems.append((system_folder, shortname, boxarts_path, snaps_path))
+        return path
 
-    for system_folder, shortname, boxarts_path, snaps_path in tqdm(valid_systems, desc="Procesando sistemas", unit="sistema"):
-        target_system_path = os.path.join(home_path, shortname, "media")
-        os.makedirs(os.path.join(target_system_path, "boxFront"), exist_ok=True)
-        os.makedirs(os.path.join(target_system_path, "screenshot"), exist_ok=True)
-        os.makedirs(os.path.join(target_system_path, "videos"), exist_ok=True)
-        os.makedirs(os.path.join(target_system_path, "wheel"), exist_ok=True)
+def find_thumbnails_path(base_path):
+    thumbnails_path = os.path.join(base_path, "thumbnails")
+    if os.path.exists(thumbnails_path):
+        print(f"{Fore.GREEN}Carpeta 'thumbnails' encontrada: {thumbnails_path}{Style.RESET_ALL}")
+        return thumbnails_path
+    return None
 
-        copy_images(boxarts_path, os.path.join(target_system_path, "boxFront"))
-        copy_images(snaps_path, os.path.join(target_system_path, "screenshot"))
+def find_playlists_path(base_path):
+    playlists_path = os.path.join(base_path, "playlists")
+    if os.path.exists(playlists_path) and os.path.isdir(playlists_path):
+        if len(os.listdir(playlists_path)) > 0:
+            print(f"{Fore.GREEN}Carpeta 'playlists' encontrada: {playlists_path}{Style.RESET_ALL}")
+            return playlists_path
+    return None
 
 def copy_images(src, dest):
     png_files = [f for f in os.listdir(src) if f.endswith(".png")]
     for file in tqdm(png_files, desc=f"Copiando imágenes en {os.path.basename(dest)}", unit="imagen", leave=False):
         shutil.copy2(os.path.join(src, file), dest)
 
+def process_thumbnails(thumbnails_path):
+    home_path = os.path.expanduser("~/pegasus-frontend")  # Carpeta principal Pegasus
+    os.makedirs(home_path, exist_ok=True)
+
+    print(f"\n{Fore.YELLOW}Procesando miniaturas...{Style.RESET_ALL}")
+
+    # Obtener todos los sistemas válidos primero
+    valid_systems = []
+    for system_folder in os.listdir(thumbnails_path):
+        system_path = os.path.join(thumbnails_path, system_folder)
+        if os.path.isdir(system_path):
+            shortname = SYSTEM_SHORTNAMES.get(system_folder)
+            if not shortname:
+                print(f"{Fore.YELLOW}Sistema no reconocido: {system_folder}, saltando.{Style.RESET_ALL}")
+                continue
+
+            boxarts_path = os.path.join(system_path, "Named_Boxarts")
+            snaps_path = os.path.join(system_path, "Named_Snaps")
+
+            if not (os.path.exists(boxarts_path) and os.listdir(boxarts_path)):
+                continue
+            if not (os.path.exists(snaps_path) and os.listdir(snaps_path)):
+                continue
+
+            valid_systems.append((system_folder, shortname, boxarts_path, snaps_path))
+
+    for system_folder, shortname, boxarts_path, snaps_path in tqdm(valid_systems, desc="Procesando sistemas", unit="sistema"):
+        target_system_path = os.path.join(home_path, shortname, "media")
+        os.makedirs(os.path.join(target_system_path, "boxFront"), exist_ok=True)
+        os.makedirs(os.path.join(target_system_path, "screenshot"), exist_ok=True)
+
+        copy_images(boxarts_path, os.path.join(target_system_path, "boxFront"))
+        copy_images(snaps_path, os.path.join(target_system_path, "screenshot"))
+
 def generate_metadata_files(playlists_path, pegasus_home):
+    print(f"\n{Fore.YELLOW}Generando archivos metadata.txt...{Style.RESET_ALL}")
+
     launch_cmd = get_launch_command()
 
     for playlist_file in tqdm(os.listdir(playlists_path), desc="Procesando playlists", unit="playlist"):
         if not playlist_file.endswith('.lpl'):
             continue
 
-        system_name = playlist_file[:-4]
+        system_name = playlist_file[:-4]  # Quitar extensión .lpl
         shortname = SYSTEM_SHORTNAMES.get(system_name)
 
         if not shortname:
-            print(f"Sistema no reconocido: {system_name}, saltando.")
+            print(f"{Fore.YELLOW}Sistema no reconocido: {system_name}, saltando.{Style.RESET_ALL}")
             continue
 
         try:
             with open(os.path.join(playlists_path, playlist_file), 'r', encoding='utf-8') as f:
                 playlist_data = json.load(f)
         except (json.JSONDecodeError, FileNotFoundError) as e:
-            print(f"Error leyendo playlist {playlist_file}: {e}")
+            print(f"{Fore.RED}Error leyendo playlist {playlist_file}: {e}{Style.RESET_ALL}")
             continue
 
         if 'items' not in playlist_data:
@@ -297,11 +369,10 @@ def generate_metadata_files(playlists_path, pegasus_home):
             full_path = item.get('path', '')
             rom_path = full_path.split('#')[0] if '#' in full_path else full_path
 
-            # Asegurarse de que la ruta comience con ./
             if rom_path.startswith('/'):
-                rom_path = f".{rom_path}"  # Agregar punto al inicio si la ruta comienza con /
+                rom_path = f".{rom_path}"
             elif not rom_path.startswith('./'):
-                rom_path = f"./{rom_path}"  # Agregar ./ si la ruta no comienza con ninguno
+                rom_path = f"./{rom_path}"
 
             game_name = item.get('label', '')
             if not game_name or not rom_path:
@@ -311,9 +382,7 @@ def generate_metadata_files(playlists_path, pegasus_home):
                 f"game: {game_name}",
                 f"file: {rom_path}",
                 f"assets.boxFront: ./media/boxFront/{game_name}.png",
-                f"assets.screenshot: ./media/screenshot/{game_name}.png",
-                f"assets.videos: ./media/videos/{game_name}.mp4",
-                f"assets.wheel: ./media/wheel/{game_name}.png\n"
+                f"assets.screenshot: ./media/screenshot/{game_name}.png\n"
             ])
 
         system_path = os.path.join(pegasus_home, shortname)
@@ -323,163 +392,59 @@ def generate_metadata_files(playlists_path, pegasus_home):
         with open(metadata_path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(metadata_content))
 
-        print(f"Metadata generada para {system_name}")
-    launch_cmd = get_launch_command()
-
-    for playlist_file in tqdm(os.listdir(playlists_path), desc="Procesando playlists", unit="playlist"):
-        if not playlist_file.endswith('.lpl'):
-            continue
-
-        system_name = playlist_file[:-4]  # Quitar extensión .lpl
-        shortname = SYSTEM_SHORTNAMES.get(system_name)
-
-        if not shortname:
-            print(f"Sistema no reconocido: {system_name}, saltando.")
-            continue
-
-        try:
-            with open(os.path.join(playlists_path, playlist_file), 'r', encoding='utf-8') as f:
-                playlist_data = json.load(f)
-        except (json.JSONDecodeError, FileNotFoundError) as e:
-            print(f"Error leyendo playlist {playlist_file}: {e}")
-            continue
-
-        if 'items' not in playlist_data:
-            continue
-
-        # Obtener core_path del primer elemento no DETECT
-        core_path = "DETECT"
-        for item in playlist_data['items']:
-            if item.get('core_path') and item['core_path'] != "DETECT":
-                core_path = item['core_path']
-                break
-
-        # Crear contenido del metadata.txt
-        metadata_content = [
-            f"collection: {system_name}",
-            f"shortname: {shortname}",
-            f"launch: {launch_cmd} -L {core_path} {{file.path}}\n"
-        ]
-
-        # Agregar entradas de juegos
-        for item in playlist_data['items']:
-            full_path = item.get('path', '')
-            rom_path = full_path.split('#')[0] if '#' in full_path else full_path
-
-            game_name = item.get('label', '')
-            if not game_name or not rom_path:
-                continue
-
-            metadata_content.extend([
-                f"game: {game_name}",
-                f"file: .{rom_path}",  # Agregado el punto antes de la ruta
-                f"assets.boxFront: ./media/boxFront/{game_name}.png",
-                f"assets.screenshot: ./media/screenshot/{game_name}.png",
-                f"assets.videos: ./media/videos/{game_name}.mp4",
-                f"assets.wheel: ./media/wheel/{game_name}.png\n"
-            ])
-
-        # Escribir archivo metadata.txt
-        system_path = os.path.join(pegasus_home, shortname)
-        os.makedirs(system_path, exist_ok=True)
-
-        metadata_path = os.path.join(system_path, "metadata.txt")
-        with open(metadata_path, 'w', encoding='utf-8') as f:
-            f.write('\n'.join(metadata_content))
-
-        print(f"Metadata generada para {system_name}")
-    launch_cmd = get_launch_command()
-
-    for playlist_file in tqdm(os.listdir(playlists_path), desc="Procesando playlists", unit="playlist"):
-        if not playlist_file.endswith('.lpl'):
-            continue
-
-        system_name = playlist_file[:-4]  # Quitar extensión .lpl
-        shortname = SYSTEM_SHORTNAMES.get(system_name)
-
-        if not shortname:
-            print(f"Sistema no reconocido: {system_name}, saltando.")
-            continue
-
-        try:
-            with open(os.path.join(playlists_path, playlist_file), 'r', encoding='utf-8') as f:
-                playlist_data = json.load(f)
-        except (json.JSONDecodeError, FileNotFoundError) as e:
-            print(f"Error leyendo playlist {playlist_file}: {e}")
-            continue
-
-        if 'items' not in playlist_data:
-            continue
-
-        # Obtener core_path del primer elemento no DETECT
-        core_path = "DETECT"
-        for item in playlist_data['items']:
-            if item.get('core_path') and item['core_path'] != "DETECT":
-                core_path = item['core_path']
-                break
-
-        # Crear contenido del metadata.txt
-        metadata_content = [
-            f"collection: {system_name}",
-            f"shortname: {shortname}",
-            f"launch: {launch_cmd} -L {core_path} {{file.path}}\n"
-        ]
-
-        # Agregar entradas de juegos
-        for item in playlist_data['items']:
-            full_path = item.get('path', '')
-            rom_path = full_path.split('#')[0] if '#' in full_path else full_path
-
-            game_name = item.get('label', '')
-            if not game_name or not rom_path:
-                continue
-
-            metadata_content.extend([
-                f"game: {game_name}",
-                f"file: {rom_path}",
-                f"assets.boxFront: ./media/boxFront/{game_name}.png",
-                f"assets.screenshot: ./media/screenshot/{game_name}.png",
-                f"assets.videos: ./media/videos/{game_name}.mp4",
-                f"assets.wheel: ./media/wheel/{game_name}.png\n"
-            ])
-
-        # Escribir archivo metadata.txt
-        system_path = os.path.join(pegasus_home, shortname)
-        os.makedirs(system_path, exist_ok=True)
-
-        metadata_path = os.path.join(system_path, "metadata.txt")
-        with open(metadata_path, 'w', encoding='utf-8') as f:
-            f.write('\n'.join(metadata_content))
-
-        print(f"Metadata generada para {system_name}")
+        print(f"{Fore.GREEN}Metadata generada para {system_name}{Style.RESET_ALL}")
 
 def main():
-    # Paso 1: Encontrar RetroArch
-    retroarch_base = find_retroarch()
-    if not retroarch_base:
-        print("RetroArch no encontrado. Terminando el script.")
-        return
+    while True:
+        print_banner()
+        print_menu()
 
-    # Paso 2: Encontrar la carpeta 'thumbnails'
-    thumbnails_path = find_thumbnails_path(retroarch_base)
-    if not thumbnails_path:
-        print("Carpeta 'thumbnails' no encontrada. Terminando el script.")
-        return
+        try:
+            choice = input(f"\n{Fore.YELLOW}Seleccione una opción (1-3): {Style.RESET_ALL}")
 
-    # Paso 3: Encontrar la carpeta 'playlists'
-    playlists_path = find_playlists_path()
-    if not playlists_path:
-        print("Carpeta 'playlists' no encontrada o vacía. Terminando el script.")
-        return
+            if choice == "1":
+                retroarch_path = find_retroarch_auto()
+            elif choice == "2":
+                retroarch_path = get_custom_path()
+                if retroarch_path is None:
+                    print(f"\n{Fore.RED}Operación cancelada por el usuario.{Style.RESET_ALL}")
+                    input("\nPresione Enter para continuar...")
+                    continue
+            elif choice == "3":
+                print(f"\n{Fore.CYAN}¡Gracias por usar RetroPegasus Converter Tool!{Style.RESET_ALL}")
+                sys.exit(0)
+            else:
+                print(f"{Fore.RED}Opción inválida. Por favor, seleccione 1, 2 o 3.{Style.RESET_ALL}")
+                continue
 
-    # Paso 4: Procesar carpetas de sistemas y thumbnails
-    home_path = os.path.expanduser("~/pegasus-frontend")
-    process_thumbnails(thumbnails_path)
+            if not retroarch_path:
+                input(f"\n{Fore.RED}Presione Enter para continuar...{Style.RESET_ALL}")
+                continue
 
-    # Paso 5: Generar archivos metadata.txt
-    generate_metadata_files(playlists_path, home_path)
+            # Buscar las carpetas necesarias en la ruta proporcionada
+            thumbnails_path = find_thumbnails_path(retroarch_path)
+            if not thumbnails_path:
+                print(f"{Fore.RED}No se encontró la carpeta 'thumbnails' en la ruta especificada.{Style.RESET_ALL}")
+                input("\nPresione Enter para continuar...")
+                continue
 
-    print("Script completado exitosamente.")
+            playlists_path = find_playlists_path(retroarch_path)
+            if not playlists_path:
+                print(f"{Fore.RED}No se encontró la carpeta 'playlists' en la ruta especificada.{Style.RESET_ALL}")
+                input("\nPresione Enter para continuar...")
+                continue
+
+            # Procesar las miniaturas y generar los metadatos
+            home_path = os.path.expanduser("~/pegasus-frontend")
+            process_thumbnails(thumbnails_path)
+            generate_metadata_files(playlists_path, home_path)
+
+            print(f"\n{Fore.GREEN}¡Conversión completada con éxito!{Style.RESET_ALL}")
+            input("\nPresione Enter para continuar...")
+
+        except KeyboardInterrupt:
+            print(f"\n\n{Fore.CYAN}¡Hasta luego!{Style.RESET_ALL}")
+            sys.exit(0)
 
 if __name__ == "__main__":
     main()
