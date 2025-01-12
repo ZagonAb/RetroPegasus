@@ -7,7 +7,6 @@ from tqdm import tqdm
 from colorama import init, Fore, Style
 import sys
 
-# Inicializar colorama para Windows
 init()
 
 SYSTEM_SHORTNAMES = {
@@ -147,7 +146,7 @@ def print_banner():
 def print_menu():
     menu = f"""
     {Fore.YELLOW}[1]{Style.RESET_ALL} Escanear instalación de RetroArch
-    {Fore.YELLOW}[2]{Style.RESET_ALL} Introducir ruta personalizada
+    {Fore.YELLOW}[2]{Style.RESET_ALL} Introducir ruta personalizada de RetroArch
     {Fore.YELLOW}[3]{Style.RESET_ALL} Salir
     """
     print(menu)
