@@ -245,11 +245,44 @@ def verify_retroarch_folders(path):
 
     return all_valid, errors
 
+"""
 def get_launch_command():
     system = platform.system()
     if system == "Windows":
         return "retroarch.exe"
     elif system == "Darwin":
+        return "open -a RetroArch --args"
+    else:  # Linux
+        if os.path.exists("/usr/bin/retroarch"):
+            return "retroarch"
+        elif os.path.exists(os.path.expanduser("~/.var/app/org.libretro.RetroArch")):
+            return "flatpak run org.libretro.RetroArch"
+        elif os.path.exists(os.path.expanduser("~/snap/retroarch")):
+            return "snap run retroarch"
+    return "retroarch"
+"""
+
+def get_launch_command():
+    system = platform.system()
+    if system == "Windows":
+        # Posibles ubicaciones de RetroArch en Windows
+        possible_paths = [
+            os.path.join(os.getenv('PROGRAMFILES'), "RetroArch", "retroarch.exe"),
+            os.path.join(os.getenv('PROGRAMFILES(X86)'), "RetroArch", "retroarch.exe"),
+            os.path.join(os.getenv('APPDATA'), "RetroArch", "retroarch.exe"),
+            os.path.join(os.getenv('LOCALAPPDATA'), "RetroArch", "retroarch.exe")
+        ]
+
+        # Buscar RetroArch en las ubicaciones posibles
+        for path in possible_paths:
+            if os.path.exists(path):
+                # Envolver la ruta en comillas para manejar espacios
+                return f'"{path}"'
+
+        # Si no se encuentra, usar solo el ejecutable (asumiendo que está en PATH)
+        return "retroarch.exe"
+
+    elif system == "Darwin":  # macOS
         return "open -a RetroArch --args"
     else:  # Linux
         if os.path.exists("/usr/bin/retroarch"):
