@@ -327,6 +327,7 @@ def process_thumbnails(thumbnails_path):
         copy_images(boxarts_path, os.path.join(target_system_path, "boxFront"))
         copy_images(snaps_path, os.path.join(target_system_path, "screenshot"))
 
+"""
 def generate_metadata_files(playlists_path, pegasus_home):
     print(f"\n{Fore.YELLOW}Generando archivos metadata.txt...{Style.RESET_ALL}")
 
@@ -371,8 +372,77 @@ def generate_metadata_files(playlists_path, pegasus_home):
 
             if rom_path.startswith('/'):
                 rom_path = f".{rom_path}"
-            elif not rom_path.startswith('./'):
+            elif not rom_path.startswith('/'):
                 rom_path = f"./{rom_path}"
+
+            game_name = item.get('label', '')
+            if not game_name or not rom_path:
+                continue
+
+            metadata_content.extend([
+                f"game: {game_name}",
+                f"file: {rom_path}",
+                f"assets.boxFront: ./media/boxFront/{game_name}.png",
+                f"assets.screenshot: ./media/screenshot/{game_name}.png\n"
+            ])
+
+        system_path = os.path.join(pegasus_home, shortname)
+        os.makedirs(system_path, exist_ok=True)
+
+        metadata_path = os.path.join(system_path, "metadata.txt")
+        with open(metadata_path, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(metadata_content))
+
+        print(f"{Fore.GREEN}Metadata generada para {system_name}{Style.RESET_ALL}")
+"""
+
+def generate_metadata_files(playlists_path, pegasus_home):
+    print(f"\n{Fore.YELLOW}Generando archivos metadata.txt...{Style.RESET_ALL}")
+
+    launch_cmd = get_launch_command()
+
+    for playlist_file in tqdm(os.listdir(playlists_path), desc="Procesando playlists", unit="playlist"):
+        if not playlist_file.endswith('.lpl'):
+            continue
+
+        system_name = playlist_file[:-4]  # Quitar extensión .lpl
+        shortname = SYSTEM_SHORTNAMES.get(system_name)
+
+        if not shortname:
+            print(f"{Fore.YELLOW}Sistema no reconocido: {system_name}, saltando.{Style.RESET_ALL}")
+            continue
+
+        try:
+            with open(os.path.join(playlists_path, playlist_file), 'r', encoding='utf-8') as f:
+                playlist_data = json.load(f)
+        except (json.JSONDecodeError, FileNotFoundError) as e:
+            print(f"{Fore.RED}Error leyendo playlist {playlist_file}: {e}{Style.RESET_ALL}")
+            continue
+
+        if 'items' not in playlist_data:
+            continue
+
+        core_path = "DETECT"
+        for item in playlist_data['items']:
+            if item.get('core_path') and item['core_path'] != "DETECT":
+                core_path = item['core_path']
+                break
+
+        metadata_content = [
+            f"collection: {system_name}",
+            f"shortname: {shortname}",
+            f"launch: {launch_cmd} -L {core_path} {{file.path}}\n"
+        ]
+
+        for item in playlist_data['items']:
+            full_path = item.get('path', '')
+            rom_path = full_path.split('#')[0] if '#' in full_path else full_path
+
+            # Modificación: asegurar que la ruta comience con / y eliminar ./ si existe
+            if rom_path.startswith('./'):
+                rom_path = rom_path[2:]  # Eliminar './' del inicio
+            if not rom_path.startswith('/'):
+                rom_path = '/' + rom_path
 
             game_name = item.get('label', '')
             if not game_name or not rom_path:
