@@ -156,7 +156,7 @@ def get_output_path():
     while True:
         print(f"\n{Fore.YELLOW}Select the location to save Pegasus Frontend data:{Style.RESET_ALL}")
         print(f"{Fore.YELLOW}[1]{Style.RESET_ALL} Use default location on Linux (~/pegasus-frontend)")
-        print(f"{Fore.YELLOW}[2]{Style.RESET_ALL} Specify custom route")
+        print(f"{Fore.YELLOW}[2]{Style.RESET_ALL} Specify custom path")
 
         choice = input(f"\n{Fore.YELLOW}Select an option (1-2): {Style.RESET_ALL}")
 
@@ -313,7 +313,7 @@ def get_custom_path():
     while True:
         path = input(f"\n{Fore.YELLOW}Enter the RetroArch installation path: {Style.RESET_ALL}")
         if not os.path.exists(path):
-            print(f"{Fore.RED}The route entered does not exist. Please check and try again.{Style.RESET_ALL}")
+            print(f"{Fore.RED}The path entered does not exist. Please check and try again.{Style.RESET_ALL}")
             continue
 
         # Verificar que la ruta contenga las carpetas necesarias
@@ -324,7 +324,7 @@ def get_custom_path():
             for error in errors:
                 print(f"{Fore.RED}• {error}{Style.RESET_ALL}")
 
-            retry = input(f"\n{Fore.YELLOW}Would you like to try another route? (y/n): {Style.RESET_ALL}").lower()
+            retry = input(f"\n{Fore.YELLOW}Would you like to try another path? (y/n): {Style.RESET_ALL}").lower()
             if retry != 'y':
                 return None
             continue
