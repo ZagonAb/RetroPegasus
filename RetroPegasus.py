@@ -220,11 +220,6 @@ def get_system_paths():
     return []
 
 def verify_retroarch_folders(path):
-    """
-    Verifica que existan las carpetas necesarias en la ruta proporcionada
-    Retorna una tupla de (bool, list) donde bool indica si todo está correcto
-    y list contiene los mensajes de error si los hay
-    """
     required_folders = {
         'thumbnails': False,
         'playlists': False
@@ -255,15 +250,16 @@ def get_launch_command():
             os.path.join(os.getenv('PROGRAMFILES'), "RetroArch", "retroarch.exe"),
             os.path.join(os.getenv('PROGRAMFILES(X86)'), "RetroArch", "retroarch.exe"),
             os.path.join(os.getenv('APPDATA'), "RetroArch", "retroarch.exe"),
-            os.path.join(os.getenv('LOCALAPPDATA'), "RetroArch", "retroarch.exe")
+            os.path.join(os.getenv('LOCALAPPDATA'), "RetroArch", "retroarch.exe"),
+            "C:\\RetroArch-Win64\\retroarch.exe",
+            "C:\\RetroArch-Win32\\retroarch.exe"
         ]
 
         for path in possible_paths:
             if os.path.exists(path):
+                return f'"{path}"'  # Devolvemos la ruta completa entre comillas
 
-                return f'"{path}"'
-
-        return "retroarch.exe"
+        return "retroarch.exe"  # Fallback si no se encuentra ninguna ruta
 
     elif system == "Darwin":
         return "open -a RetroArch --args"
@@ -419,7 +415,7 @@ def generate_metadata_files(playlists_path, pegasus_home):
         metadata_content = [
             f"collection: {system_name}",
             f"shortname: {shortname}",
-            f"launch: {launch_cmd} -L {core_path} {{file.path}}\n"
+            f'launch: {launch_cmd} -L "{core_path}" "{{file.path}}"\n'
         ]
 
         for item in playlist_data['items']:
