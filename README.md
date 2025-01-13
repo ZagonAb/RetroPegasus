@@ -73,7 +73,7 @@ pip install colorama tqdm
 - Commodore - CD32: amigacd32
 - Commodore - CDTV: amigacdtv
 - Commodore - PET: pet
-- Commodore - Plus-4: plus4
+- Commodore - Plus-4: plus
 - Commodore - VIC-20: vic20
 - DOOM: doom
 - DOS: dos
@@ -90,7 +90,7 @@ pip install colorama tqdm
 - Handheld Electronic Game: heg
 - Hartung - Game Master: gamemaster
 - Jump 'n Bump: jumpnbump
-- LeapFrog - Leapster Learning Game System: 
+- LeapFrog - Leapster Learning Game System: leapfrog
 - LowRes NX: lowresnx
 - Lutro: lutro
 - MAME: mame
@@ -171,7 +171,7 @@ pip install colorama tqdm
 - WASM-4: wasm4
 - Watara - Supervision: watara
 - Wolfenstein 3D: wolfenstein
- </details>
+</details>
 
 ## 📁 Generated File Structure
 

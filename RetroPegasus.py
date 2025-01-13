@@ -52,7 +52,7 @@ SYSTEM_SHORTNAMES = {
   "Handheld Electronic Game": "heg",
   "Hartung - Game Master": "gamemaster",
   "Jump 'n Bump": "jumpnbump",
-  "LeapFrog - Leapster Learning Game System": "",
+  "LeapFrog - Leapster Learning Game System": "leapfrog",
   "LowRes NX": "lowresnx",
   "Lutro": "lutro",
   "MAME": "mame",
