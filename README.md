@@ -171,8 +171,7 @@ pip install colorama tqdm
 - WASM-4: wasm4
 - Watara - Supervision: watara
 - Wolfenstein 3D: wolfenstein
-
-  </details>
+ </details>
 
 ## 📁 Generated File Structure
 
