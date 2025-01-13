@@ -146,50 +146,50 @@ def print_banner():
 
 def print_menu():
     menu = f"""
-    {Fore.YELLOW}[1]{Style.RESET_ALL} Escanear instalación de RetroArch
-    {Fore.YELLOW}[2]{Style.RESET_ALL} Introducir ruta personalizada de RetroArch
-    {Fore.YELLOW}[3]{Style.RESET_ALL} Salir
+    {Fore.YELLOW}[1]{Style.RESET_ALL} Scan RetroArch installation
+    {Fore.YELLOW}[2]{Style.RESET_ALL} Enter custom RetroArch path
+    {Fore.YELLOW}[3]{Style.RESET_ALL} Exit
     """
     print(menu)
 
 def get_output_path():
     while True:
-        print(f"\n{Fore.YELLOW}Seleccione la ubicación para guardar los datos de Pegasus Frontend:{Style.RESET_ALL}")
-        print(f"{Fore.YELLOW}[1]{Style.RESET_ALL} Usar ubicación predeterminada en Linux (~/pegasus-frontend)")
-        print(f"{Fore.YELLOW}[2]{Style.RESET_ALL} Especificar ruta personalizada")
+        print(f"\n{Fore.YELLOW}Select the location to save Pegasus Frontend data:{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}[1]{Style.RESET_ALL} Use default location on Linux (~/pegasus-frontend)")
+        print(f"{Fore.YELLOW}[2]{Style.RESET_ALL} Specify custom route")
 
-        choice = input(f"\n{Fore.YELLOW}Seleccione una opción (1-2): {Style.RESET_ALL}")
+        choice = input(f"\n{Fore.YELLOW}Select an option (1-2): {Style.RESET_ALL}")
 
         if choice == "1":
             output_path = os.path.expanduser("~/pegasus-frontend")
         elif choice == "2":
-            base_path = input(f"\n{Fore.YELLOW}Ingrese la ruta donde desea crear la carpeta pegasus-frontend: {Style.RESET_ALL}")
+            base_path = input(f"\n{Fore.YELLOW}Enter the path where you want to create the pegasus-frontend folder: {Style.RESET_ALL}")
             base_path = os.path.expanduser(base_path)
 
             if not os.path.exists(base_path):
-                print(f"{Fore.RED}La ruta {base_path} no existe.{Style.RESET_ALL}")
+                print(f"{Fore.RED}The path {base_path} does not exist.{Style.RESET_ALL}")
                 continue
 
             output_path = os.path.join(base_path, "pegasus-frontend")
         else:
-            print(f"{Fore.RED}Opción inválida. Por favor, seleccione 1 o 2.{Style.RESET_ALL}")
+            print(f"{Fore.RED}Invalid option. Please select 1 or 2.{Style.RESET_ALL}")
             continue
 
         if os.path.exists(output_path):
-            print(f"\n{Fore.YELLOW}Se encontró una carpeta pegasus-frontend existente en:{Style.RESET_ALL}")
+            print(f"\n{Fore.YELLOW}An existing pegasus-frontend folder was found in:{Style.RESET_ALL}")
             print(f"{Fore.YELLOW}{output_path}{Style.RESET_ALL}")
-            confirm = input(f"{Fore.YELLOW}¿Desea sobrescribir su contenido? (s/n): {Style.RESET_ALL}").lower()
+            confirm = input(f"{Fore.YELLOW}Do you want to overwrite your content? (y/n): {Style.RESET_ALL}").lower()
 
-            if confirm != 's':
+            if confirm != 'y':
                 continue
 
-            print(f"\n{Fore.YELLOW}⚠️  Advertencia: El contenido existente en {output_path} será sobrescrito.{Style.RESET_ALL}")
+            print(f"\n{Fore.YELLOW}⚠️  Warning: Existing content in {output_path} will be overwritten.{Style.RESET_ALL}")
         else:
             try:
                 os.makedirs(output_path)
-                print(f"\n{Fore.GREEN}✓ Creada nueva carpeta: {output_path}{Style.RESET_ALL}")
+                print(f"\n{Fore.GREEN}✓ New folder created: {output_path}{Style.RESET_ALL}")
             except Exception as e:
-                print(f"{Fore.RED}Error al crear la carpeta: {e}{Style.RESET_ALL}")
+                print(f"{Fore.RED}Error creating folder: {e}{Style.RESET_ALL}")
                 continue
 
         return output_path
@@ -238,9 +238,9 @@ def verify_retroarch_folders(path):
             if len(os.listdir(folder_path)) > 0:
                 required_folders[folder] = True
             else:
-                errors.append(f"La carpeta '{folder}' está vacía")
+                errors.append(f"The '{folder}' folder is empty")
         else:
-            errors.append(f"No se encontró la carpeta '{folder}'")
+            errors.append(f"The '{folder}' folder was not found ")
 
     all_valid = all(required_folders.values())
 
@@ -276,23 +276,23 @@ def get_launch_command():
 
 def find_retroarch_auto():
     system = platform.system()
-    print(f"\n{Fore.CYAN}Detectado sistema operativo: {system}{Style.RESET_ALL}")
+    print(f"\n{Fore.CYAN}Operating system detected: {system}{Style.RESET_ALL}")
 
     paths = get_system_paths()
-    print(f"\n{Fore.YELLOW}Buscando instalaciones de RetroArch...{Style.RESET_ALL}")
+    print(f"\n{Fore.YELLOW}Looking for RetroArch installations...{Style.RESET_ALL}")
 
     found_paths = []
     for path in paths:
         if os.path.exists(path):
             found_paths.append(path)
-            print(f"{Fore.GREEN}✓ Encontrado RetroArch en: {path}{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}✓ Found RetroArch in: {path}{Style.RESET_ALL}")
 
     if not found_paths:
-        print(f"{Fore.RED}No se encontraron instalaciones de RetroArch.{Style.RESET_ALL}")
+        print(f"{Fore.RED}No RetroArch installations found.{Style.RESET_ALL}")
         return None
 
     if len(found_paths) > 1:
-        print(f"\n{Fore.YELLOW}Se encontraron múltiples instalaciones. Por favor seleccione una:{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}Multiple facilities found. Please select one:{Style.RESET_ALL}")
         for i, path in enumerate(found_paths, 1):
             print(f"{Fore.YELLOW}[{i}]{Style.RESET_ALL} {path}")
 
@@ -301,29 +301,29 @@ def find_retroarch_auto():
                 choice = int(input("\nSeleccione una opción (número): "))
                 if 1 <= choice <= len(found_paths):
                     return found_paths[choice - 1]
-                print(f"{Fore.RED}Opción inválida. Intente nuevamente.{Style.RESET_ALL}")
+                print(f"{Fore.RED}Invalid option. Please try again..{Style.RESET_ALL}")
             except ValueError:
-                print(f"{Fore.RED}Por favor, ingrese un número válido.{Style.RESET_ALL}")
+                print(f"{Fore.RED}Please enter a valid number.{Style.RESET_ALL}")
 
     return found_paths[0]
 
 def get_custom_path():
     while True:
-        path = input(f"\n{Fore.YELLOW}Ingrese la ruta de instalación de RetroArch: {Style.RESET_ALL}")
+        path = input(f"\n{Fore.YELLOW}Enter the RetroArch installation path: {Style.RESET_ALL}")
         if not os.path.exists(path):
-            print(f"{Fore.RED}La ruta ingresada no existe. Por favor, verifique e intente nuevamente.{Style.RESET_ALL}")
+            print(f"{Fore.RED}The route entered does not exist. Please check and try again.{Style.RESET_ALL}")
             continue
 
         # Verificar que la ruta contenga las carpetas necesarias
         is_valid, errors = verify_retroarch_folders(path)
 
         if not is_valid:
-            print(f"\n{Fore.RED}La ruta no contiene una instalación válida de RetroArch:{Style.RESET_ALL}")
+            print(f"\n{Fore.RED}The path does not contain a valid RetroArch installation:{Style.RESET_ALL}")
             for error in errors:
                 print(f"{Fore.RED}• {error}{Style.RESET_ALL}")
 
-            retry = input(f"\n{Fore.YELLOW}¿Desea intentar con otra ruta? (s/n): {Style.RESET_ALL}").lower()
-            if retry != 's':
+            retry = input(f"\n{Fore.YELLOW}Would you like to try another route? (y/n): {Style.RESET_ALL}").lower()
+            if retry != 'y':
                 return None
             continue
 
@@ -332,7 +332,7 @@ def get_custom_path():
 def find_thumbnails_path(base_path):
     thumbnails_path = os.path.join(base_path, "thumbnails")
     if os.path.exists(thumbnails_path):
-        print(f"{Fore.GREEN}Carpeta 'thumbnails' encontrada: {thumbnails_path}{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}'thumbnails' folder found: {thumbnails_path}{Style.RESET_ALL}")
         return thumbnails_path
     return None
 
@@ -340,19 +340,19 @@ def find_playlists_path(base_path):
     playlists_path = os.path.join(base_path, "playlists")
     if os.path.exists(playlists_path) and os.path.isdir(playlists_path):
         if len(os.listdir(playlists_path)) > 0:
-            print(f"{Fore.GREEN}Carpeta 'playlists' encontrada: {playlists_path}{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}'playlists' folder found: {playlists_path}{Style.RESET_ALL}")
             return playlists_path
     return None
 
 def copy_images(src, dest):
     png_files = [f for f in os.listdir(src) if f.endswith(".png")]
-    for file in tqdm(png_files, desc=f"Copiando imágenes en {os.path.basename(dest)}", unit="imagen", leave=False):
+    for file in tqdm(png_files, desc=f"Copying images in {os.path.basename(dest)}", unit="imagen", leave=False):
         shutil.copy2(os.path.join(src, file), dest)
 
 def process_thumbnails(thumbnails_path, output_path):
     os.makedirs(output_path, exist_ok=True)
 
-    print(f"\n{Fore.YELLOW}Procesando miniaturas...{Style.RESET_ALL}")
+    print(f"\n{Fore.YELLOW}Processing thumbnails...{Style.RESET_ALL}")
 
     valid_systems = []
     for system_folder in os.listdir(thumbnails_path):
@@ -360,7 +360,7 @@ def process_thumbnails(thumbnails_path, output_path):
         if os.path.isdir(system_path):
             shortname = SYSTEM_SHORTNAMES.get(system_folder)
             if not shortname:
-                print(f"{Fore.YELLOW}Sistema no reconocido: {system_folder}, saltando.{Style.RESET_ALL}")
+                print(f"{Fore.YELLOW}System not recognized: {system_folder}, skipping.{Style.RESET_ALL}")
                 continue
 
             boxarts_path = os.path.join(system_path, "Named_Boxarts")
@@ -373,7 +373,7 @@ def process_thumbnails(thumbnails_path, output_path):
 
             valid_systems.append((system_folder, shortname, boxarts_path, snaps_path))
 
-    for system_folder, shortname, boxarts_path, snaps_path in tqdm(valid_systems, desc="Procesando sistemas", unit="sistema"):
+    for system_folder, shortname, boxarts_path, snaps_path in tqdm(valid_systems, desc="Processing systems", unit="systems"):
         target_system_path = os.path.join(output_path, shortname, "media")
         os.makedirs(os.path.join(target_system_path, "boxFront"), exist_ok=True)
         os.makedirs(os.path.join(target_system_path, "screenshot"), exist_ok=True)
@@ -382,12 +382,12 @@ def process_thumbnails(thumbnails_path, output_path):
         copy_images(snaps_path, os.path.join(target_system_path, "screenshot"))
 
 def generate_metadata_files(playlists_path, pegasus_home):
-    print(f"\n{Fore.YELLOW}Generando archivos metadata.txt...{Style.RESET_ALL}")
+    print(f"\n{Fore.YELLOW}Generating metadata.txt files...{Style.RESET_ALL}")
 
     launch_cmd = get_launch_command()
     system_type = platform.system()
 
-    for playlist_file in tqdm(os.listdir(playlists_path), desc="Procesando playlists", unit="playlist"):
+    for playlist_file in tqdm(os.listdir(playlists_path), desc="Processing playlists", unit="playlist"):
         if not playlist_file.endswith('.lpl'):
             continue
 
@@ -395,14 +395,14 @@ def generate_metadata_files(playlists_path, pegasus_home):
         shortname = SYSTEM_SHORTNAMES.get(system_name)
 
         if not shortname:
-            print(f"{Fore.YELLOW}Sistema no reconocido: {system_name}, saltando.{Style.RESET_ALL}")
+            print(f"{Fore.YELLOW}System not recognized: {system_name}, skipping.{Style.RESET_ALL}")
             continue
 
         try:
             with open(os.path.join(playlists_path, playlist_file), 'r', encoding='utf-8') as f:
                 playlist_data = json.load(f)
         except (json.JSONDecodeError, FileNotFoundError) as e:
-            print(f"{Fore.RED}Error leyendo playlist {playlist_file}: {e}{Style.RESET_ALL}")
+            print(f"{Fore.RED}Error reading playlist {playlist_file}: {e}{Style.RESET_ALL}")
             continue
 
         if 'items' not in playlist_data:
@@ -469,7 +469,7 @@ def generate_metadata_files(playlists_path, pegasus_home):
         with open(metadata_path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(metadata_content))
 
-        print(f"{Fore.GREEN}Metadata generada para {system_name}{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}Metadata generated for {system_name}{Style.RESET_ALL}")
 
 def main():
     while True:
@@ -477,37 +477,37 @@ def main():
         print_menu()
 
         try:
-            choice = input(f"\n{Fore.YELLOW}Seleccione una opción (1-3): {Style.RESET_ALL}")
+            choice = input(f"\n{Fore.YELLOW}Select an option (1-3): {Style.RESET_ALL}")
 
             if choice == "1":
                 retroarch_path = find_retroarch_auto()
             elif choice == "2":
                 retroarch_path = get_custom_path()
                 if retroarch_path is None:
-                    print(f"\n{Fore.RED}Operación cancelada por el usuario.{Style.RESET_ALL}")
+                    print(f"\n{Fore.RED}Operation cancelled by user.{Style.RESET_ALL}")
                     input("\nPresione Enter para continuar...")
                     continue
             elif choice == "3":
-                print(f"\n{Fore.CYAN}¡Gracias por usar RetroPegasus Converter Tool!{Style.RESET_ALL}")
+                print(f"\n{Fore.CYAN}¡Thank you for using RetroPegasus Converter Tool!{Style.RESET_ALL}")
                 sys.exit(0)
             else:
-                print(f"{Fore.RED}Opción inválida. Por favor, seleccione 1, 2 o 3.{Style.RESET_ALL}")
+                print(f"{Fore.RED}Invalid option. Please select 1, 2 or 3.{Style.RESET_ALL}")
                 continue
 
             if not retroarch_path:
-                input(f"\n{Fore.RED}Presione Enter para continuar...{Style.RESET_ALL}")
+                input(f"\n{Fore.RED}Press Enter to continue...{Style.RESET_ALL}")
                 continue
 
             # Buscar las carpetas necesarias en la ruta proporcionada
             thumbnails_path = find_thumbnails_path(retroarch_path)
             if not thumbnails_path:
-                print(f"{Fore.RED}No se encontró la carpeta 'thumbnails' en la ruta especificada.{Style.RESET_ALL}")
+                print(f"{Fore.RED}The 'thumbnails' folder was not found in the specified path.{Style.RESET_ALL}")
                 input("\nPresione Enter para continuar...")
                 continue
 
             playlists_path = find_playlists_path(retroarch_path)
             if not playlists_path:
-                print(f"{Fore.RED}No se encontró la carpeta 'playlists' en la ruta especificada.{Style.RESET_ALL}")
+                print(f"{Fore.RED}The 'playlists' folder could not be found in the specified path.{Style.RESET_ALL}")
                 input("\nPresione Enter para continuar...")
                 continue
 
@@ -517,11 +517,11 @@ def main():
             generate_metadata_files(playlists_path, output_path)
 
 
-            print(f"\n{Fore.GREEN}¡Conversión completada con éxito!{Style.RESET_ALL}")
+            print(f"\n{Fore.GREEN}Conversion completed successfully!{Style.RESET_ALL}")
             input("\nPresione Enter para continuar...")
 
         except KeyboardInterrupt:
-            print(f"\n\n{Fore.CYAN}¡Hasta luego!{Style.RESET_ALL}")
+            print(f"\n\n{Fore.CYAN}See you later!{Style.RESET_ALL}")
             sys.exit(0)
 
 if __name__ == "__main__":
