@@ -200,7 +200,9 @@ def get_system_paths():
         return [
             os.path.join(os.getenv('APPDATA'), "RetroArch"),
             "C:\\Program Files\\RetroArch",
-            "C:\\Program Files (x86)\\RetroArch"
+            "C:\\Program Files (x86)\\RetroArch",
+            "C:\\RetroArch-Win64",
+            "C:\\RetroArch-Win32"
         ]
     elif system == "Linux":
         return [
