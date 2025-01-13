@@ -483,7 +483,7 @@ def main():
                 retroarch_path = get_custom_path()
                 if retroarch_path is None:
                     print(f"\n{Fore.RED}Operation cancelled by user.{Style.RESET_ALL}")
-                    input("\nPresione Enter para continuar...")
+                    input("\nPress Enter to continue...")
                     continue
             elif choice == "3":
                 print(f"\n{Fore.CYAN}¡Thank you for using RetroPegasus Converter Tool!{Style.RESET_ALL}")
@@ -500,13 +500,13 @@ def main():
             thumbnails_path = find_thumbnails_path(retroarch_path)
             if not thumbnails_path:
                 print(f"{Fore.RED}The 'thumbnails' folder was not found in the specified path.{Style.RESET_ALL}")
-                input("\nPresione Enter para continuar...")
+                input("\nPress Enter to continue...")
                 continue
 
             playlists_path = find_playlists_path(retroarch_path)
             if not playlists_path:
                 print(f"{Fore.RED}The 'playlists' folder could not be found in the specified path.{Style.RESET_ALL}")
-                input("\nPresione Enter para continuar...")
+                input("\nPress Enter to continue...")
                 continue
 
             output_path = get_output_path()
@@ -516,7 +516,7 @@ def main():
 
 
             print(f"\n{Fore.GREEN}Conversion completed successfully!{Style.RESET_ALL}")
-            input("\nPresione Enter para continuar...")
+            input("\nPress Enter to continue...")
 
         except KeyboardInterrupt:
             print(f"\n\n{Fore.CYAN}See you later!{Style.RESET_ALL}")
