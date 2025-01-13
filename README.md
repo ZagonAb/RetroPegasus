@@ -32,6 +32,8 @@ pip install colorama tqdm
   - %APPDATA%/RetroArch
   - C:\Program Files\RetroArch
   - C:\Program Files (x86)\RetroArch
+  - C:\\RetroArch-Win32
+  - C:\\RetroArch-Win64
 
 ### Linux
 - Rutas automáticas soportadas:
