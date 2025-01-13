@@ -257,7 +257,7 @@ def get_launch_command():
 
         for path in possible_paths:
             if os.path.exists(path):
-                return f'"{path}"'  # Devolvemos la ruta completa entre comillas
+                return path  # Retornamos la ruta sin comillas
 
         return "retroarch.exe"  # Fallback si no se encuentra ninguna ruta
 
@@ -415,7 +415,7 @@ def generate_metadata_files(playlists_path, pegasus_home):
         metadata_content = [
             f"collection: {system_name}",
             f"shortname: {shortname}",
-            f'launch: {launch_cmd} -L "{core_path}" "{{file.path}}"\n'
+            f"launch: {launch_cmd} -L {core_path} {{file.path}}\n"
         ]
 
         for item in playlist_data['items']:
