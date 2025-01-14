@@ -49,128 +49,128 @@ pip install colorama tqdm
 
 <details>
   <summary>🎮 Supported Game Systems</summary>
-  - Amstrad - CPC: amstradcpc
-  - Amstrad - GX4000: gx4000
-  - Arduboy Inc - Arduboy: arduboy
-  - Atari - 2600: atari2600
-  - Atari - 5200: atari5200
-  - Atari - 7800: atari7800
-  - Atari - 8-bit: atari8bit
-  - Atari - Jaguar: atarijaguar
-  - Atari - Lynx: atarilynx
-  - Atari - ST: atarist
-  - Atomiswave: atomiswave
-  - Bandai - WonderSwan: wonderswan
-  - Bandai - WonderSwan Color: wonderswancolor
-  - Cannonball: cannonball
-  - Casio - Loopy: loopy
-  - Casio - PV-1000: pv1000
-  - Cave Story: cavestory
-  - ChaiLove: chailove
-  - Coleco - ColecoVision: colecovision
-  - Commodore - 64: c64
-  - Commodore - Amiga: amiga
-  - Commodore - CD32: amigacd32
-  - Commodore - CDTV: amigacdtv
-  - Commodore - PET: pet
-  - Commodore - Plus-4: plus
-  - Commodore - VIC-20: vic20
-  - DOOM: doom
-  - DOS: dos
-  - Dinothawr: dinothawr
-  - Emerson - Arcadia 2001: arcadia2001
-  - Entex - Adventure Vision: entex
-  - Epoch - Super Cassette Vision: scv
-  - FBNeo - Arcade Games: fbneo
-  - Fairchild - Channel F: channelf
-  - Flashback: flashback
-  - Funtech - Super Acan: superarcan
-  - GCE - Vectrex: vectrex
-  - GamePark - GP32: gp32
-  - Handheld Electronic Game: heg
-  - Hartung - Game Master: gamemaster
-  - Jump 'n Bump: jumpnbump
-  - LeapFrog - Leapster Learning Game System: leapfrog
-  - LowRes NX: lowresnx
-  - Lutro: lutro
-  - MAME: mame
-  - Magnavox - Odyssey2: odyssey2
-  - Mattel - Intellivision: intellivision
-  - Microsoft - MSX: msx
-  - Microsoft - MSX2: msx2
-  - Microsoft - Xbox: xbox
-  - Microsoft - Xbox 360: xbox360
-  - MrBoom: mrboom
-  - NEC - PC Engine - TurboGrafx 16: tg16
-  - NEC - PC Engine CD - TurboGrafx-CD: tgcd
-  - NEC - PC Engine SuperGrafx: supergrafx
-  - NEC - PC-8001 - PC-8801: pc8001
-  - NEC - PC-98: necpc98
-  - NEC - PC-FX: nepcfx
-  - Nintendo - Family Computer Disk System: ndisk
-  - Nintendo - Game Boy: gb
-  - Nintendo - Game Boy Advance: gba
-  - Nintendo - Game Boy Color: gbc
-  - Nintendo - GameCube: gamecube
-  - Nintendo - Nintendo 3DS: 3ds
-  - Nintendo - Nintendo 64: n64
-  - Nintendo - Nintendo 64DD: n64dd
-  - Nintendo - Nintendo DS: nds
-  - Nintendo - Nintendo DSi: ndsi
-  - Nintendo - Nintendo Entertainment System: nes
-  - Nintendo - Pokemon Mini: nmini
-  - Nintendo - Satellaview: satellaview
-  - Nintendo - Sufami Turbo: sufami
-  - Nintendo - Super Nintendo Entertainment System: snes
-  - Nintendo - Virtual Boy: virtualboy
-  - Nintendo - Wii: wii
-  - Nintendo - Wii U: wiiu
-  - Philips - CD-i: cdimono1
-  - Philips - Videopac+: videopac
-  - Quake: quake
-  - Quake II: quakeii
-  - Quake III: quakeiii
-  - RCA - Studio II: studioii
-  - RPG Maker: rpgmaker
-  - Rick Dangerous: rick
-  - SNK - Neo Geo: ngp
-  - SNK - Neo Geo CD: ngcd
-  - SNK - Neo Geo Pocket: ngp
-  - SNK - Neo Geo Pocket Color: ngpc
-  - ScummVM: scummvm
-  - Sega - 32X: 32x
-  - Sega - Dreamcast: dreamcast
-  - Sega - Game Gear: gamegear
-  - Sega - Master System - Mark III: mastersystem
-  - Sega - Mega Drive - Genesis: megadrive
-  - Sega - Mega-CD - Sega CD: segacd
-  - Sega - Naomi: naomi
-  - Sega - Naomi 2: naomi2
-  - Sega - PICO: segapico
-  - Sega - SG-1000: sg1000
-  - Sega - Saturn: saturn
-  - Sharp - X1: sharpx1
-  - Sharp - X68000: x68000
-  - Sinclair - ZX 81: sinclair
-  - Sinclair - ZX Spectrum: spectrum
-  - Sony - PlayStation: psx
-  - Sony - PlayStation 2: ps2
-  - Sony - PlayStation 3: ps3
-  - Sony - PlayStation 4: ps4
-  - Sony - PlayStation Portable: psp
-  - Sony - PlayStation Vita: vita
-  - Spectravideo - SVI-318 - SVI-328: spectravideo
-  - TIC-80: tic80
-  - The 3DO Company - 3DO: 3do
-  - Thomson - MOTO: thomson
-  - Tiger - Game.com: gamecom
-  - Tomb Raider: tombraider
-  - VTech - CreatiVision: creatiVision
-  - VTech - V.Smile: vsmile
-  - Vircon32: vircon32
-  - WASM-4: wasm4
-  - Watara - Supervision: watara
-  - Wolfenstein 3D: wolfenstein
+  - Amstrad - CPC = amstradcpc
+  - Amstrad - GX4000 = gx4000
+  - Arduboy Inc - Arduboy = arduboy
+  - Atari - 2600 = atari2600
+  - Atari - 5200 = atari5200
+  - Atari - 7800 = atari7800
+  - Atari - 8-bit = atari8bit
+  - Atari - Jaguar = atarijaguar
+  - Atari - Lynx = atarilynx
+  - Atari - ST = atarist
+  - Atomiswave = atomiswave
+  - Bandai - WonderSwan = wonderswan
+  - Bandai - WonderSwan Color = wonderswancolor
+  - Cannonball = cannonball
+  - Casio - Loopy = loopy
+  - Casio - PV-1000 = pv1000
+  - Cave Story = cavestory
+  - ChaiLove = chailove
+  - Coleco - ColecoVision = colecovision
+  - Commodore - 64 = c64
+  - Commodore - Amiga = amiga
+  - Commodore - CD32 = amigacd32
+  - Commodore - CDTV = amigacdtv
+  - Commodore - PET = pet
+  - Commodore - Plus-4 = plus
+  - Commodore - VIC-20 = vic20
+  - DOOM = doom
+  - DOS = dos
+  - Dinothawr = dinothawr
+  - Emerson - Arcadia 2001 = arcadia2001
+  - Entex - Adventure Vision = entex
+  - Epoch - Super Cassette Vision = scv
+  - FBNeo - Arcade Games = fbneo
+  - Fairchild - Channel F = channelf
+  - Flashback = flashback
+  - Funtech - Super Acan = superarcan
+  - GCE - Vectrex = vectrex
+  - GamePark - GP32 = gp32
+  - Handheld Electronic Game = heg
+  - Hartung - Game Master = gamemaster
+  - Jump 'n Bump = jumpnbump
+  - LeapFrog - Leapster Learning Game System = leapfrog
+  - LowRes NX = lowresnx
+  - Lutro = lutro
+  - MAME = mame
+  - Magnavox - Odyssey2 = odyssey2
+  - Mattel - Intellivision = intellivision
+  - Microsoft - MSX = msx
+  - Microsoft - MSX2 = msx2
+  - Microsoft - Xbox = xbox
+  - Microsoft - Xbox 360 = xbox360
+  - MrBoom = mrboom
+  - NEC - PC Engine - TurboGrafx 16 = tg16
+  - NEC - PC Engine CD - TurboGrafx-CD = tgcd
+  - NEC - PC Engine SuperGrafx = supergrafx
+  - NEC - PC-8001 - PC-8801 = pc8001
+  - NEC - PC-98 = necpc98
+  - NEC - PC-FX = nepcfx
+  - Nintendo - Family Computer Disk System = ndisk
+  - Nintendo - Game Boy = gb
+  - Nintendo - Game Boy Advance = gba
+  - Nintendo - Game Boy Color = gbc
+  - Nintendo - GameCube = gamecube
+  - Nintendo - Nintendo 3DS = 3ds
+  - Nintendo - Nintendo 64 = n64
+  - Nintendo - Nintendo 64DD = n64dd
+  - Nintendo - Nintendo DS = nds
+  - Nintendo - Nintendo DSi = ndsi
+  - Nintendo - Nintendo Entertainment System = nes
+  - Nintendo - Pokemon Mini = nmini
+  - Nintendo - Satellaview = satellaview
+  - Nintendo - Sufami Turbo = sufami
+  - Nintendo - Super Nintendo Entertainment System = snes
+  - Nintendo - Virtual Boy = virtualboy
+  - Nintendo - Wii = wii
+  - Nintendo - Wii U = wiiu
+  - Philips - CD-i = cdimono1
+  - Philips - Videopac+ = videopac
+  - Quake = quake
+  - Quake II = quakeii
+  - Quake III = quakeiii
+  - RCA - Studio II = studioii
+  - RPG Maker = rpgmaker
+  - Rick Dangerous = rick
+  - SNK - Neo Geo = ngp
+  - SNK - Neo Geo CD = ngcd
+  - SNK - Neo Geo Pocket = ngp
+  - SNK - Neo Geo Pocket Color = ngpc
+  - ScummVM = scummvm
+  - Sega - 32X = 32x
+  - Sega - Dreamcast = dreamcast
+  - Sega - Game Gear = gamegear
+  - Sega - Master System - Mark III = mastersystem
+  - Sega - Mega Drive - Genesis = megadrive
+  - Sega - Mega-CD - Sega CD = segacd
+  - Sega - Naomi = naomi
+  - Sega - Naomi 2 = naomi2
+  - Sega - PICO = segapico
+  - Sega - SG-1000 = sg1000
+  - Sega - Saturn = saturn
+  - Sharp - X1 = sharpx1
+  - Sharp - X68000 = x68000
+  - Sinclair - ZX 81 = sinclair
+  - Sinclair - ZX Spectrum = spectrum
+  - Sony - PlayStation = psx
+  - Sony - PlayStation 2 = ps2
+  - Sony - PlayStation 3 = ps3
+  - Sony - PlayStation 4 = ps4
+  - Sony - PlayStation Portable = psp
+  - Sony - PlayStation Vita = vita
+  - Spectravideo - SVI-318 - SVI-328 = spectravideo
+  - TIC-80 = tic80
+  - The 3DO Company - 3DO = 3do
+  - Thomson - MOTO = thomson
+  - Tiger - Game.com = gamecom
+  - Tomb Raider = tombraider
+  - VTech - CreatiVision = creatiVision
+  - VTech - V.Smile = vsmile
+  - Vircon32 = vircon32
+  - WASM-4 = wasm4
+  - Watara - Supervision = watara
+  - Wolfenstein 3D = wolfenstein
 </details>
 
 ## 📁 Generated File Structure
