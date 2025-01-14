@@ -49,7 +49,7 @@ pip install colorama tqdm
 
 <details>
   <summary>🎮 Supported Game Systems</summary>
-  - mastersystem.png = Sega - Master System - Mark III
+
   - Amstrad - CPC = amstradcpc
   - Amstrad - GX4000 = gx4000
   - Arduboy Inc - Arduboy = arduboy
@@ -172,6 +172,7 @@ pip install colorama tqdm
   - WASM-4 = wasm4
   - Watara - Supervision = watara
   - Wolfenstein 3D = wolfenstein
+  
 </details>
 
 ## 📁 Generated File Structure
