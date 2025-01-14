@@ -49,6 +49,7 @@ pip install colorama tqdm
 
 <details>
   <summary>🎮 Supported Game Systems</summary>
+  - mastersystem.png = Sega - Master System - Mark III
   - Amstrad - CPC = amstradcpc
   - Amstrad - GX4000 = gx4000
   - Arduboy Inc - Arduboy = arduboy
