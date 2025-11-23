@@ -180,12 +180,16 @@ pip install colorama tqdm
 ```
 ~/pegasus-frontend/
 ├── [system]/
-│   ├── metadata.txt
-│   └── media/
-│       ├── boxFront/
-│       │   └── [images of boxes]
-│       └── screenshot/
-│           └── [screenshots]
+│ ├── metadata.txt
+│ └── media/
+│ ├── boxFront/ # ← RetroArch's Named_Boxarts
+│ │ └── [game box covers]
+│ ├── screenshot/ # ← RetroArch's Named_Snaps
+│ │ └── [game screenshots]
+│ ├── logo/ # ← RetroArch's Named_Logos
+│ │ └── [game logos]
+│ └── titlescreen/ # ← RetroArch's Named_Titles
+│ └── [game title screens]
 ```
 
 ## 🛠️ Use
@@ -219,6 +223,8 @@ Your RetroArch installation should have:
 1. `thumbnails` folder with:
 - Named_Boxarts
 - Named_Snaps
+- Named_Logos
+- Named_Titles
 2. `playlists` folder with .lpl files
 
 ## 🔍 Validation
