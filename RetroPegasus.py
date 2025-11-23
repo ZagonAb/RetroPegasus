@@ -139,7 +139,7 @@ MEDIA_MAPPING = {
     "Named_Boxarts": "boxFront",
     "Named_Snaps": "screenshot",
     "Named_Logos": "logo",
-    "Named_Titles": "marquee"
+    "Named_Titles": "titlescreen"
 }
 
 def print_banner():
