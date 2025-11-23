@@ -182,13 +182,13 @@ pip install colorama tqdm
 ├── [system]/
 │ ├── metadata.txt
 │ └── media/
-│ ├── boxFront/ # ← RetroArch's Named_Boxarts
+│ ├── boxFront/ # ← RetroArch Named_Boxarts
 │ │ └── [game box covers]
-│ ├── screenshot/ # ← RetroArch's Named_Snaps
+│ ├── screenshot/ # ← RetroArch Named_Snaps
 │ │ └── [game screenshots]
-│ ├── logo/ # ← RetroArch's Named_Logos
+│ ├── logo/ # ← RetroArch Named_Logos
 │ │ └── [game logos]
-│ └── titlescreen/ # ← RetroArch's Named_Titles
+│ └── titlescreen/ # ← RetroArch Named_Titles
 │ └── [game title screens]
 ```
 
