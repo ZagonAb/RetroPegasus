@@ -234,11 +234,9 @@ def verify_retroarch_folders(path):
 
     errors = []
 
-    # Verificar la existencia de las carpetas requeridas
     for folder in required_folders:
         folder_path = os.path.join(path, folder)
         if os.path.exists(folder_path) and os.path.isdir(folder_path):
-            # Verificar que las carpetas no estén vacías
             if len(os.listdir(folder_path)) > 0:
                 required_folders[folder] = True
             else:
@@ -264,13 +262,13 @@ def get_launch_command():
 
         for path in possible_paths:
             if os.path.exists(path):
-                return path  # Retornamos la ruta sin comillas
+                return path
 
-        return "retroarch.exe"  # Fallback si no se encuentra ninguna ruta
+        return "retroarch.exe"
 
     elif system == "Darwin":
         return "open -a RetroArch --args"
-    else:  # Linux
+    else:
         if os.path.exists("/usr/bin/retroarch"):
             return "retroarch"
         elif os.path.exists(os.path.expanduser("~/.var/app/org.libretro.RetroArch")):
@@ -319,7 +317,6 @@ def get_custom_path():
             print(f"{Fore.RED}The path entered does not exist. Please check and try again.{Style.RESET_ALL}")
             continue
 
-        # Verificar que la ruta contenga las carpetas necesarias
         is_valid, errors = verify_retroarch_folders(path)
 
         if not is_valid:
@@ -368,26 +365,22 @@ def process_thumbnails(thumbnails_path, output_path):
                 print(f"{Fore.YELLOW}System not recognized: {system_folder}, skipping.{Style.RESET_ALL}")
                 continue
 
-            # Verificar qué tipos de medios están disponibles
             available_media = {}
             for retroarch_media, pegasus_media in MEDIA_MAPPING.items():
                 media_path = os.path.join(system_path, retroarch_media)
                 if os.path.exists(media_path) and os.listdir(media_path):
                     available_media[retroarch_media] = media_path
 
-            # Solo procesar sistemas que tengan al menos un tipo de medio
             if available_media:
                 valid_systems.append((system_folder, shortname, available_media))
 
     for system_folder, shortname, available_media in tqdm(valid_systems, desc="Processing systems", unit="systems"):
         target_system_path = os.path.join(output_path, shortname, "media")
 
-        # Crear carpetas para cada tipo de medio disponible
         for retroarch_media, pegasus_media in MEDIA_MAPPING.items():
             if retroarch_media in available_media:
                 os.makedirs(os.path.join(target_system_path, pegasus_media), exist_ok=True)
 
-        # Copiar imágenes para cada tipo de medio
         for retroarch_media, source_path in available_media.items():
             pegasus_media = MEDIA_MAPPING[retroarch_media]
             copy_images(source_path, os.path.join(target_system_path, pegasus_media))
@@ -435,49 +428,38 @@ def generate_metadata_files(playlists_path, pegasus_home):
             full_path = item.get('path', '')
             rom_path = full_path.split('#')[0] if '#' in full_path else full_path
 
-            # Limpieza y normalización de la ruta según el sistema operativo
             if system_type == "Windows":
-                # Eliminar ./ del inicio si existe
                 if rom_path.startswith('./'):
                     rom_path = rom_path[2:]
 
-                # Eliminar / del inicio si existe
                 if rom_path.startswith('/'):
                     rom_path = rom_path[1:]
 
-                # Asegurar que usamos backslashes en Windows
                 rom_path = rom_path.replace('/', '\\')
 
-                # Si la ruta no comienza con letra de unidad (C:\, D:\, etc.)
                 if not re.match(r'^[A-Za-z]:\\', rom_path):
-                    # Añadir C:\ por defecto si no hay letra de unidad
                     rom_path = 'C:\\' + rom_path
             else:
-                # Para Linux/macOS
                 if rom_path.startswith('./'):
                     rom_path = rom_path[2:]
                 if not rom_path.startswith('/'):
                     rom_path = '/' + rom_path
 
-                # Asegurar que usamos forward slashes en Linux/macOS
                 rom_path = rom_path.replace('\\', '/')
 
             game_name = item.get('label', '')
             if not game_name or not rom_path:
                 continue
-
-            # Añadir referencias a todos los tipos de medios disponibles
             game_metadata = [
                 f"game: {game_name}",
                 f"file: {rom_path}"
             ]
 
-            # Añadir assets solo para los tipos de medios que existen
             for retroarch_media, pegasus_media in MEDIA_MAPPING.items():
                 media_file_path = f"./media/{pegasus_media}/{game_name}.png"
                 game_metadata.append(f"assets.{pegasus_media}: {media_file_path}")
 
-            game_metadata.append("")  # Línea en blanco entre juegos
+            game_metadata.append("")
 
             metadata_content.extend(game_metadata)
 
@@ -517,7 +499,6 @@ def main():
                 input(f"\n{Fore.RED}Press Enter to continue...{Style.RESET_ALL}")
                 continue
 
-            # Buscar las carpetas necesarias en la ruta proporcionada
             thumbnails_path = find_thumbnails_path(retroarch_path)
             if not thumbnails_path:
                 print(f"{Fore.RED}The 'thumbnails' folder was not found in the specified path.{Style.RESET_ALL}")
