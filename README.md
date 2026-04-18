@@ -2,6 +2,8 @@
 
 A professional command-line utility for seamless migration from RetroArch to Pegasus Frontend. RetroPegasus automates the conversion of playlists, metadata, and media assets while maintaining compatibility across Windows, Linux, and macOS.
 
+![gif](https://github.com/ZagonAb/RetroPegasus/blob/c4ead06853653f24f4c5feb7ce1fcf8b59a216cd/assets/image/demo.gif)
+
 ## ✨ Features
 
 - **Zero Dependencies** - Uses only Python standard library
