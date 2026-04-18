@@ -1,4 +1,3 @@
-```markdown
 # RetroPegasus Converter Tool
 
 A professional command-line utility for seamless migration from RetroArch to Pegasus Frontend. RetroPegasus automates the conversion of playlists, metadata, and media assets while maintaining compatibility across Windows, Linux, and macOS.
