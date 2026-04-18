@@ -1,261 +1,192 @@
+```markdown
 # RetroPegasus Converter Tool
 
-RetroPegasus is a command-line tool that makes it easy to migrate your RetroArch library to Pegasus Frontend by automating metadata creation and asset organization.
+A professional command-line utility for seamless migration from RetroArch to Pegasus Frontend. RetroPegasus automates the conversion of playlists, metadata, and media assets while maintaining compatibility across Windows, Linux, and macOS.
 
-## 🚀 Characteristics
+## ✨ Features
 
-- Automatic detection of RetroArch installations on Windows, Linux and macOS
-- Support for custom installation paths
-- Automatic migration of images (boxarts and screenshots)
-- Automatic generation of metadata.txt files compatible with Pegasus Frontend
-- Colored command line interface for better readability
-- Progress bar for long operations
-- Error handling and path validation
+- **Zero Dependencies** - Uses only Python standard library
+- **Cross-Platform** - Native support for Windows, Linux, and macOS
+- **Intelligent Auto-Detection** - Automatically locates RetroArch installations
+- **Flexible Media Handling** - Choose between absolute paths, copy mode, or metadata-only generation
+- **Core Path Detection** - Correctly extracts default core paths from playlists
+- **Clean Terminal Interface** - ANSI color-coded output for better readability
+- **Robust Error Handling** - Validates paths and provides clear error messages
+- **Batch Processing** - Handles multiple systems in a single execution
 
-## 📋 Prerequisites
+## 📋 Requirements
 
-### Python Dependencies
-```
-colorama
-tqdm
-```
+- Python 3.6 or higher
+- RetroArch installation with:
+  - `playlists` folder containing `.lpl` files
+  - `thumbnails` folder (optional, for media assets)
 
-### Installing Dependencies
+No external packages required. Uses only Python standard library modules.
+
+## 🚀 Quick Start
+
 ```bash
-pip install colorama tqdm
+# Clone the repository
+git clone https://github.com/yourusername/RetroPegasus.git
+cd RetroPegasus
+
+# Run the script
+python3 RetroPegasus.py
 ```
 
 ## 💻 Supported Operating Systems
 
 ### Windows
-- Supported automatic routes:
-  - %APPDATA%/RetroArch
-  - C:\Program Files\RetroArch
-  - C:\Program Files (x86)\RetroArch
-  - C:\\RetroArch-Win32
-  - C:\\RetroArch-Win64
+Automatically detects installations in:
+- `%APPDATA%\RetroArch`
+- `C:\Program Files\RetroArch`
+- `C:\Program Files (x86)\RetroArch`
+- `C:\RetroArch-Win32`
+- `C:\RetroArch-Win64`
 
 ### Linux
-- Supported automatic routes:
-  - /usr/bin/retroarch
-  - ~/.var/app/org.libretro.RetroArch/config/retroarch/
-  - ~/snap/retroarch/current/retroarch
-  - ~/.config/retroarch
+Automatically detects installations in:
+- `/usr/bin/retroarch`
+- `~/.var/app/org.libretro.RetroArch/config/retroarch/` (Flatpak)
+- `~/snap/retroarch/current/retroarch` (Snap)
+- `~/.config/retroarch`
 
 ### macOS
-- Supported automatic routes:
-  - ~/Library/Application Support/RetroArch
-  - /Applications/RetroArch.app
+Automatically detects installations in:
+- `~/Library/Application Support/RetroArch`
+- `/Applications/RetroArch.app`
+- `~/Applications/RetroArch.app`
 
-<details>
-  <summary>🎮 Supported Game Systems</summary>
+## 📖 Usage Guide
 
-  - Amstrad - CPC = amstradcpc
-  - Amstrad - GX4000 = gx4000
-  - Arduboy Inc - Arduboy = arduboy
-  - Atari - 2600 = atari2600
-  - Atari - 5200 = atari5200
-  - Atari - 7800 = atari7800
-  - Atari - 8-bit = atari8bit
-  - Atari - Jaguar = atarijaguar
-  - Atari - Lynx = atarilynx
-  - Atari - ST = atarist
-  - Atomiswave = atomiswave
-  - Bandai - WonderSwan = wonderswan
-  - Bandai - WonderSwan Color = wonderswancolor
-  - Cannonball = cannonball
-  - Casio - Loopy = loopy
-  - Casio - PV-1000 = pv1000
-  - Cave Story = cavestory
-  - ChaiLove = chailove
-  - Coleco - ColecoVision = colecovision
-  - Commodore - 64 = c64
-  - Commodore - Amiga = amiga
-  - Commodore - CD32 = amigacd32
-  - Commodore - CDTV = amigacdtv
-  - Commodore - PET = pet
-  - Commodore - Plus-4 = plus
-  - Commodore - VIC-20 = vic20
-  - DOOM = doom
-  - DOS = dos
-  - Dinothawr = dinothawr
-  - Emerson - Arcadia 2001 = arcadia2001
-  - Entex - Adventure Vision = entex
-  - Epoch - Super Cassette Vision = scv
-  - FBNeo - Arcade Games = fbneo
-  - Fairchild - Channel F = channelf
-  - Flashback = flashback
-  - Funtech - Super Acan = superarcan
-  - GCE - Vectrex = vectrex
-  - GamePark - GP32 = gp32
-  - Handheld Electronic Game = heg
-  - Hartung - Game Master = gamemaster
-  - Jump 'n Bump = jumpnbump
-  - LeapFrog - Leapster Learning Game System = leapfrog
-  - LowRes NX = lowresnx
-  - Lutro = lutro
-  - MAME = mame
-  - Magnavox - Odyssey2 = odyssey2
-  - Mattel - Intellivision = intellivision
-  - Microsoft - MSX = msx
-  - Microsoft - MSX2 = msx2
-  - Microsoft - Xbox = xbox
-  - Microsoft - Xbox 360 = xbox360
-  - MrBoom = mrboom
-  - NEC - PC Engine - TurboGrafx 16 = tg16
-  - NEC - PC Engine CD - TurboGrafx-CD = tgcd
-  - NEC - PC Engine SuperGrafx = supergrafx
-  - NEC - PC-8001 - PC-8801 = pc8001
-  - NEC - PC-98 = necpc98
-  - NEC - PC-FX = nepcfx
-  - Nintendo - Family Computer Disk System = ndisk
-  - Nintendo - Game Boy = gb
-  - Nintendo - Game Boy Advance = gba
-  - Nintendo - Game Boy Color = gbc
-  - Nintendo - GameCube = gamecube
-  - Nintendo - Nintendo 3DS = 3ds
-  - Nintendo - Nintendo 64 = n64
-  - Nintendo - Nintendo 64DD = n64dd
-  - Nintendo - Nintendo DS = nds
-  - Nintendo - Nintendo DSi = ndsi
-  - Nintendo - Nintendo Entertainment System = nes
-  - Nintendo - Pokemon Mini = nmini
-  - Nintendo - Satellaview = satellaview
-  - Nintendo - Sufami Turbo = sufami
-  - Nintendo - Super Nintendo Entertainment System = snes
-  - Nintendo - Virtual Boy = virtualboy
-  - Nintendo - Wii = wii
-  - Nintendo - Wii U = wiiu
-  - Philips - CD-i = cdimono1
-  - Philips - Videopac+ = videopac
-  - Quake = quake
-  - Quake II = quakeii
-  - Quake III = quakeiii
-  - RCA - Studio II = studioii
-  - RPG Maker = rpgmaker
-  - Rick Dangerous = rick
-  - SNK - Neo Geo = ngp
-  - SNK - Neo Geo CD = ngcd
-  - SNK - Neo Geo Pocket = ngp
-  - SNK - Neo Geo Pocket Color = ngpc
-  - ScummVM = scummvm
-  - Sega - 32X = 32x
-  - Sega - Dreamcast = dreamcast
-  - Sega - Game Gear = gamegear
-  - Sega - Master System - Mark III = mastersystem
-  - Sega - Mega Drive - Genesis = megadrive
-  - Sega - Mega-CD - Sega CD = segacd
-  - Sega - Naomi = naomi
-  - Sega - Naomi 2 = naomi2
-  - Sega - PICO = segapico
-  - Sega - SG-1000 = sg1000
-  - Sega - Saturn = saturn
-  - Sharp - X1 = sharpx1
-  - Sharp - X68000 = x68000
-  - Sinclair - ZX 81 = sinclair
-  - Sinclair - ZX Spectrum = spectrum
-  - Sony - PlayStation = psx
-  - Sony - PlayStation 2 = ps2
-  - Sony - PlayStation 3 = ps3
-  - Sony - PlayStation 4 = ps4
-  - Sony - PlayStation Portable = psp
-  - Sony - PlayStation Vita = vita
-  - Spectravideo - SVI-318 - SVI-328 = spectravideo
-  - TIC-80 = tic80
-  - The 3DO Company - 3DO = 3do
-  - Thomson - MOTO = thomson
-  - Tiger - Game.com = gamecom
-  - Tomb Raider = tombraider
-  - VTech - CreatiVision = creatiVision
-  - VTech - V.Smile = vsmile
-  - Vircon32 = vircon32
-  - WASM-4 = wasm4
-  - Watara - Supervision = watara
-  - Wolfenstein 3D = wolfenstein
-  
-</details>
+### Step 1: Select RetroArch Source
+Choose between automatic detection or manual path specification.
 
-## 📁 Generated File Structure
+### Step 2: Configure Output Location
+Select where to create the Pegasus Frontend data structure.
 
+### Step 3: Choose Media Handling Mode
+- **Option 1 (Recommended)**: Use absolute paths to existing RetroArch thumbnails
+- **Option 2**: Copy images to Pegasus folder structure
+- **Option 3**: Skip media entirely (metadata only)
+
+## 📁 Generated Structure
+
+### With Media Copy (Option 2)
 ```
 ~/pegasus-frontend/
-├── [system]/
-│ ├── metadata.txt
-│ └── media/
-│ ├── boxFront/ # ← RetroArch Named_Boxarts
-│ │ └── [game box covers]
-│ ├── screenshot/ # ← RetroArch Named_Snaps
-│ │ └── [game screenshots]
-│ ├── logo/ # ← RetroArch Named_Logos
-│ │ └── [game logos]
-│ └── titlescreen/ # ← RetroArch Named_Titles
-│ └── [game title screens]
+├── snes/
+│   ├── metadata.txt
+│   └── media/
+│       ├── boxFront/
+│       │   └── [game_boxarts].png
+│       ├── screenshot/
+│       │   └── [game_screenshots].png
+│       ├── logo/
+│       │   └── [game_logos].png
+│       └── titlescreen/
+│           └── [game_titles].png
+├── megadrive/
+│   ├── metadata.txt
+│   └── media/
+│       └── ...
+└── gba/
+    ├── metadata.txt
+    └── media/
+        └── ...
 ```
 
-## 🛠️ Use
-
-1. Run the script:
-```bash
-python retropegasus.py
+### With Absolute Paths (Option 1 - Recommended)
+```
+~/pegasus-frontend/
+├── snes/
+│   └── metadata.txt
+├── megadrive/
+│   └── metadata.txt
+└── gba/
+    └── metadata.txt
 ```
 
-2. Select an option:
-   - `1`: RetroArch Automatic Installation Scan
-   - `2`: Enter custom path
-   - `3`: Exit
+## 📄 Metadata Format
 
-3. The script:
-   - It will search for the necessary folders (thumbnails and playlists)
-   - It will process the thumbnails and copy them to the Pegasus structure
-   - It will generate the necessary metadata.txt files
+Each `metadata.txt` file contains:
 
-## 📄 Generated Files
+```ini
+collection: Nintendo - Super Nintendo Entertainment System
+shortname: snes
+launch: retroarch -L /path/to/core.so {file.path}
 
-### metadata.txt
-Contains the information needed by Pegasus Frontend:
-- Collection name
-- Launch command
-- List of games with their paths and assets
-- Paths to images (boxart and screenshots)
+game: Super Mario World
+file: /path/to/roms/Super Mario World.sfc
+assets.boxFront: /path/to/thumbnails/Nintendo - SNES/Named_Boxarts/Super Mario World.png
+assets.screenshot: /path/to/thumbnails/Nintendo - SNES/Named_Snaps/Super Mario World.png
+assets.logo: /path/to/thumbnails/Nintendo - SNES/Named_Logos/Super Mario World.png
+assets.titlescreen: /path/to/thumbnails/Nintendo - SNES/Named_Titles/Super Mario World.png
+```
 
-## ⚠️ RetroArch Requirements
-Your RetroArch installation should have:
-1. `thumbnails` folder with:
-- Named_Boxarts
-- Named_Snaps
-- Named_Logos
-- Named_Titles
-2. `playlists` folder with .lpl files
+## 🎮 Supported Systems
 
-## 🔍 Validation
+<details>
+<summary>Click to expand full list (100+ systems)</summary>
 
-The script checks:
-- Existence of RetroArch installation
-- Presence of required folders
-- Valid content in folders
-- Correct file formats
+| RetroArch System | Pegasus Shortname |
+|-----------------|-------------------|
+| Amstrad - CPC | amstradcpc |
+| Atari - 2600 | atari2600 |
+| Atari - 5200 | atari5200 |
+| Atari - 7800 | atari7800 |
+| Atari - Jaguar | atarijaguar |
+| Atari - Lynx | atarilynx |
+| Commodore - 64 | c64 |
+| Commodore - Amiga | amiga |
+| DOS | dos |
+| MAME | mame |
+| Microsoft - MSX | msx |
+| Microsoft - Xbox | xbox |
+| Nintendo - Game Boy | gb |
+| Nintendo - Game Boy Advance | gba |
+| Nintendo - Game Boy Color | gbc |
+| Nintendo - GameCube | gamecube |
+| Nintendo - Nintendo 64 | n64 |
+| Nintendo - Nintendo DS | nds |
+| Nintendo - NES | nes |
+| Nintendo - SNES | snes |
+| Sega - Dreamcast | dreamcast |
+| Sega - Game Gear | gamegear |
+| Sega - Genesis/Mega Drive | megadrive |
+| Sega - Master System | mastersystem |
+| Sega - Saturn | saturn |
+| SNK - Neo Geo | ngp |
+| SNK - Neo Geo Pocket | ngp |
+| Sony - PlayStation | psx |
+| Sony - PlayStation 2 | ps2 |
+| Sony - PlayStation Portable | psp |
+| ...and 70+ more systems |
 
-## 🤝 Contribution
+</details>
 
-If you find bugs or have improvements to suggest:
-1. Open an issue
-2. Describe the problem or improvement
-3. If possible, provide examples
+## ⚙️ Configuration Validation
 
-## 📝 Remember
+The tool validates:
+- Existence of RetroArch installation directory
+- Presence of required `playlists` and `thumbnails` folders
+- Non-empty folder contents
+- Valid JSON format in playlist files
+- Core path availability (with fallback mechanisms)
 
-- Game paths in metadata.txt are absolute
-- Asset paths are relative to the system folder
-- The script preserves the original structure of RetroArch playlists
+## 📝 License
 
-## 📜 License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"></a>
+MIT License © 2024 Gonzalo Abbate (ZagonAb)
 
-----
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software without restriction.
 
-### 💖 DONATE
-I'm a programming enthusiast and passionate about free software, with a special love for classic games and the retro community. All my themes and projects are open-source and available for anyone to use. If you'd like to show your support or help me continue creating and improving these projects, you can make a voluntary donation. Every contribution, no matter how small, allows me to continue improving and maintaining these projects. 👾
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+## 💖 Support
+
+I'm a programming enthusiast passionate about free software and the retro gaming community. All my themes and projects are open-source and freely available. If you find this tool useful, consider supporting its continued development:
 
 [![Support on PayPal](https://img.shields.io/badge/PayPal-0070ba?style=for-the-badge)](https://paypal.me/ZagonAb)
 [![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/Gonzalo/donate)
