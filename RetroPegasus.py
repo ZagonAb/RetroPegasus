@@ -5,6 +5,7 @@ import time
 import json
 import sys
 import re
+import logging
 
 class Colors:
     CYAN = '\033[96m'
@@ -146,6 +147,34 @@ MEDIA_MAPPING = {
     "Named_Titles": "titlescreen"
 }
 
+
+def detect_core_mode(playlist_data, logger, system_name):
+    items = playlist_data.get('items', [])
+    if not items:
+        return None, False
+
+    cores = set()
+    for item in items:
+        core = item.get('core_path', '').strip()
+        if core and core != 'DETECT':
+            cores.add(core)
+
+    default_core = playlist_data.get('default_core_path', '').strip()
+    if default_core and default_core != 'DETECT':
+        cores.add(default_core)
+
+    if not cores:
+        logger.info(f"{system_name}: No cores found. Using global DETECT.")
+        return 'DETECT', False
+    if len(cores) == 1:
+        global_core = cores.pop()
+        logger.info(f"{system_name}: All games share the same core: {global_core}")
+        return global_core, False
+    else:
+        logger.info(f"{system_name}: Multiple cores detected ({', '.join(cores)}). Using per‑game launch.")
+        return None, True
+
+
 def print_banner():
     banner = f"""
     {Colors.CYAN}╔══════════════════════════════════════════════╗
@@ -155,6 +184,7 @@ def print_banner():
     """
     print(banner)
 
+
 def print_menu():
     menu = f"""
     {Colors.YELLOW}[1]{Colors.RESET} Scan RetroArch installation
@@ -162,6 +192,19 @@ def print_menu():
     {Colors.YELLOW}[3]{Colors.RESET} Exit
     """
     print(menu)
+
+
+def setup_logging(output_path):
+    log_file = os.path.join(output_path, "retropegaus.log")
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(log_file, encoding='utf-8')
+        ]
+    )
+    return logging.getLogger()
+
 
 def get_output_path():
     while True:
@@ -187,9 +230,9 @@ def get_output_path():
             continue
 
         if os.path.exists(output_path):
-            print(f"\n{Colors.YELLOW}An existing pegasus-frontend folder was found in:{Colors.RESET}")
+            print(f"\n{Colors.YELLOW}An existing pegasus-frontend folder was found at:{Colors.RESET}")
             print(f"{Colors.YELLOW}{output_path}{Colors.RESET}")
-            confirm = input(f"{Colors.YELLOW}Do you want to overwrite your content? (y/n): {Colors.RESET}").lower()
+            confirm = input(f"{Colors.YELLOW}Do you want to overwrite its content? (y/n): {Colors.RESET}").lower()
 
             if confirm != 'y':
                 continue
@@ -204,6 +247,7 @@ def get_output_path():
                 continue
 
         return output_path
+
 
 def get_system_paths():
     system = platform.system()
@@ -230,6 +274,7 @@ def get_system_paths():
         ]
     return []
 
+
 def verify_retroarch_folders(path):
     required_folders = {
         'thumbnails': False,
@@ -246,11 +291,12 @@ def verify_retroarch_folders(path):
             else:
                 errors.append(f"The '{folder}' folder is empty")
         else:
-            errors.append(f"The '{folder}' folder was not found ")
+            errors.append(f"The '{folder}' folder was not found")
 
     all_valid = all(required_folders.values())
 
     return all_valid, errors
+
 
 def get_launch_command():
     system = platform.system()
@@ -281,6 +327,7 @@ def get_launch_command():
             return "snap run retroarch"
     return "retroarch"
 
+
 def find_retroarch_auto():
     system = platform.system()
     print(f"\n{Colors.CYAN}Operating system detected: {system}{Colors.RESET}")
@@ -292,33 +339,34 @@ def find_retroarch_auto():
     for path in paths:
         if os.path.exists(path):
             found_paths.append(path)
-            print(f"{Colors.GREEN}✓ Found RetroArch in: {path}{Colors.RESET}")
+            print(f"{Colors.GREEN}✓ Found RetroArch at: {path}{Colors.RESET}")
 
     if not found_paths:
         print(f"{Colors.RED}No RetroArch installations found.{Colors.RESET}")
         return None
 
     if len(found_paths) > 1:
-        print(f"\n{Colors.YELLOW}Multiple facilities found. Please select one:{Colors.RESET}")
+        print(f"\n{Colors.YELLOW}Multiple installations found. Please select one:{Colors.RESET}")
         for i, path in enumerate(found_paths, 1):
             print(f"{Colors.YELLOW}[{i}]{Colors.RESET} {path}")
 
         while True:
             try:
-                choice = int(input("\nSeleccione una opción (número): "))
+                choice = int(input("\nSelect an option (number): "))
                 if 1 <= choice <= len(found_paths):
                     return found_paths[choice - 1]
-                print(f"{Colors.RED}Invalid option. Please try again..{Colors.RESET}")
+                print(f"{Colors.RED}Invalid option. Please try again.{Colors.RESET}")
             except ValueError:
                 print(f"{Colors.RED}Please enter a valid number.{Colors.RESET}")
 
     return found_paths[0]
 
+
 def get_custom_path():
     while True:
         path = input(f"\n{Colors.YELLOW}Enter the RetroArch installation path: {Colors.RESET}")
         if not os.path.exists(path):
-            print(f"{Colors.RED}The path entered does not exist. Please check and try again.{Colors.RESET}")
+            print(f"{Colors.RED}The path does not exist. Please check and try again.{Colors.RESET}")
             continue
 
         is_valid, errors = verify_retroarch_folders(path)
@@ -335,20 +383,23 @@ def get_custom_path():
 
         return path
 
+
 def find_thumbnails_path(base_path):
     thumbnails_path = os.path.join(base_path, "thumbnails")
     if os.path.exists(thumbnails_path):
-        print(f"{Colors.GREEN}'thumbnails' folder found: {thumbnails_path}{Colors.RESET}")
+        print(f"{Colors.GREEN}'thumbnails' folder found at: {thumbnails_path}{Colors.RESET}")
         return thumbnails_path
     return None
+
 
 def find_playlists_path(base_path):
     playlists_path = os.path.join(base_path, "playlists")
     if os.path.exists(playlists_path) and os.path.isdir(playlists_path):
         if len(os.listdir(playlists_path)) > 0:
-            print(f"{Colors.GREEN}'playlists' folder found: {playlists_path}{Colors.RESET}")
+            print(f"{Colors.GREEN}'playlists' folder found at: {playlists_path}{Colors.RESET}")
             return playlists_path
     return None
+
 
 def get_media_handling_mode():
     while True:
@@ -363,54 +414,58 @@ def get_media_handling_mode():
             return choice
         print(f"{Colors.RED}Invalid option. Please select 1, 2 or 3.{Colors.RESET}")
 
-def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_path):
-    print(f"\n{Colors.YELLOW}Generating metadata.txt files with absolute media paths...{Colors.RESET}")
 
-    launch_cmd = get_launch_command()
+def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_path, logger):
+    logger.info("=== Generating metadata.txt files with absolute media paths ===")
+    print(f"\n{Colors.YELLOW}Generating metadata.txt with absolute media paths...{Colors.RESET}")
+
+    launch_cmd_base = get_launch_command()
     system_type = platform.system()
 
     playlist_files = [f for f in os.listdir(playlists_path) if f.endswith('.lpl')]
     total_playlists = len(playlist_files)
+    logger.info(f"Found {total_playlists} playlist files")
 
-    print(f"{Colors.CYAN}Found {total_playlists} playlist files to process{Colors.RESET}\n")
+    print(f"{Colors.CYAN}Found {total_playlists} playlist files{Colors.RESET}\n")
+
+    processed = 0
+    total_games = 0
 
     for idx, playlist_file in enumerate(playlist_files, 1):
         system_name = playlist_file[:-4]
-        print(f"{Colors.YELLOW}[{idx}/{total_playlists}] Processing playlist: {system_name}{Colors.RESET}")
+        print(f"{Colors.YELLOW}[{idx}/{total_playlists}] Processing: {system_name}{Colors.RESET}")
+        logger.info(f"--- Processing playlist: {system_name} ---")
 
         shortname = SYSTEM_SHORTNAMES.get(system_name)
-
         if not shortname:
-            print(f"{Colors.YELLOW}  System not recognized: {system_name}, skipping.{Colors.RESET}")
+            msg = f"System not recognized: {system_name}, skipping."
+            logger.warning(msg)
+            print(f"{Colors.YELLOW}  {msg}{Colors.RESET}")
             continue
 
         try:
             with open(os.path.join(playlists_path, playlist_file), 'r', encoding='utf-8') as f:
                 playlist_data = json.load(f)
         except (json.JSONDecodeError, FileNotFoundError) as e:
+            logger.error(f"Error reading playlist {playlist_file}: {e}")
             print(f"{Colors.RED}  Error reading playlist: {e}{Colors.RESET}")
             continue
 
-        if 'items' not in playlist_data:
-            print(f"{Colors.YELLOW}  No items found in playlist, skipping.{Colors.RESET}")
+        if 'items' not in playlist_data or not playlist_data['items']:
+            logger.warning(f"No items in {playlist_file}")
+            print(f"{Colors.YELLOW}  No games found in this playlist, skipping.{Colors.RESET}")
             continue
 
-        core_path = playlist_data.get('default_core_path', 'DETECT')
-
-        if core_path == 'DETECT':
-            for item in playlist_data['items']:
-                if item.get('core_path') and item['core_path'] != "DETECT":
-                    core_path = item['core_path']
-                    break
-
-        if core_path == 'DETECT':
-            print(f"  {Colors.YELLOW}⚠️  Warning: No core path found, using 'DETECT'{Colors.RESET}")
+        global_core, use_individual = detect_core_mode(playlist_data, logger, system_name)
 
         metadata_content = [
             f"collection: {system_name}",
-            f"shortname: {shortname}",
-            f"launch: {launch_cmd} -L {core_path} {{file.path}}\n"
+            f"shortname: {shortname}"
         ]
+
+        if not use_individual:
+            metadata_content.append(f"launch: {launch_cmd_base} -L {global_core} {{file.path}}")
+        metadata_content.append("")
 
         games_count = 0
         for item in playlist_data['items']:
@@ -420,12 +475,9 @@ def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_pat
             if system_type == "Windows":
                 if rom_path.startswith('./'):
                     rom_path = rom_path[2:]
-
                 if rom_path.startswith('/'):
                     rom_path = rom_path[1:]
-
                 rom_path = rom_path.replace('/', '\\')
-
                 if not re.match(r'^[A-Za-z]:\\', rom_path):
                     rom_path = 'C:\\' + rom_path
             else:
@@ -433,7 +485,6 @@ def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_pat
                     rom_path = rom_path[2:]
                 if not rom_path.startswith('/'):
                     rom_path = '/' + rom_path
-
                 rom_path = rom_path.replace('\\', '/')
 
             game_name = item.get('label', '')
@@ -441,10 +492,21 @@ def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_pat
                 continue
 
             games_count += 1
-            game_metadata = [
-                f"game: {game_name}",
-                f"file: {rom_path}"
-            ]
+            total_games += 1
+
+            game_metadata = [f"game: {game_name}", f"file: {rom_path}"]
+
+            if use_individual:
+                core_for_game = item.get('core_path', '').strip()
+                if not core_for_game or core_for_game == 'DETECT':
+                    default_core = playlist_data.get('default_core_path', '').strip()
+                    if default_core and default_core != 'DETECT':
+                        core_for_game = default_core
+                        logger.info(f"Game '{game_name}' has no core, using default_core_path: {default_core}")
+                    else:
+                        core_for_game = 'DETECT'
+                        logger.warning(f"Game '{game_name}' has no core defined, using DETECT")
+                game_metadata.append(f"launch: {launch_cmd_base} -L {core_for_game} {{file.path}}")
 
             for retroarch_media, pegasus_media in MEDIA_MAPPING.items():
                 media_file_path = os.path.join(thumbnails_base_path, system_name, retroarch_media, f"{game_name}.png")
@@ -452,7 +514,6 @@ def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_pat
                     game_metadata.append(f"assets.{pegasus_media}: {media_file_path}")
 
             game_metadata.append("")
-
             metadata_content.extend(game_metadata)
 
         system_path = os.path.join(pegasus_home, shortname)
@@ -462,57 +523,71 @@ def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_pat
         with open(metadata_path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(metadata_content))
 
-        print(f"{Colors.GREEN}  ✓ Generated metadata with {games_count} games for {system_name}{Colors.RESET}")
-        print(f"  {Colors.CYAN}  Core used: {core_path}{Colors.RESET}\n")
+        processed += 1
+        if not use_individual:
+            logger.info(f"Generated {system_name} with {games_count} games (global core: {global_core})")
+            print(f"{Colors.GREEN}  ✓ Generated {system_name} with {games_count} games (global core){Colors.RESET}")
+            print(f"  {Colors.CYAN}  Core used: {global_core}{Colors.RESET}")
+        else:
+            logger.info(f"Generated {system_name} with {games_count} games (per‑game cores)")
+            print(f"{Colors.GREEN}  ✓ Generated {system_name} with {games_count} games (per‑game cores){Colors.RESET}")
+        print("")
 
-def generate_metadata_no_media(playlists_path, pegasus_home):
-    print(f"\n{Colors.YELLOW}Generating metadata.txt files without media...{Colors.RESET}")
+    logger.info(f"=== Finished processing {processed} playlists, total games: {total_games} ===")
+    return processed, total_games
 
-    launch_cmd = get_launch_command()
+
+def generate_metadata_no_media(playlists_path, pegasus_home, logger):
+    logger.info("=== Generating metadata.txt files without media ===")
+    print(f"\n{Colors.YELLOW}Generating metadata.txt without media...{Colors.RESET}")
+
+    launch_cmd_base = get_launch_command()
     system_type = platform.system()
 
     playlist_files = [f for f in os.listdir(playlists_path) if f.endswith('.lpl')]
     total_playlists = len(playlist_files)
+    logger.info(f"Found {total_playlists} playlist files")
 
-    print(f"{Colors.CYAN}Found {total_playlists} playlist files to process{Colors.RESET}\n")
+    print(f"{Colors.CYAN}Found {total_playlists} playlist files{Colors.RESET}\n")
+
+    processed = 0
+    total_games = 0
 
     for idx, playlist_file in enumerate(playlist_files, 1):
         system_name = playlist_file[:-4]
-        print(f"{Colors.YELLOW}[{idx}/{total_playlists}] Processing playlist: {system_name}{Colors.RESET}")
+        print(f"{Colors.YELLOW}[{idx}/{total_playlists}] Processing: {system_name}{Colors.RESET}")
+        logger.info(f"--- Processing playlist: {system_name} ---")
 
         shortname = SYSTEM_SHORTNAMES.get(system_name)
-
         if not shortname:
-            print(f"{Colors.YELLOW}  System not recognized: {system_name}, skipping.{Colors.RESET}")
+            msg = f"System not recognized: {system_name}, skipping."
+            logger.warning(msg)
+            print(f"{Colors.YELLOW}  {msg}{Colors.RESET}")
             continue
 
         try:
             with open(os.path.join(playlists_path, playlist_file), 'r', encoding='utf-8') as f:
                 playlist_data = json.load(f)
         except (json.JSONDecodeError, FileNotFoundError) as e:
+            logger.error(f"Error reading playlist {playlist_file}: {e}")
             print(f"{Colors.RED}  Error reading playlist: {e}{Colors.RESET}")
             continue
 
-        if 'items' not in playlist_data:
-            print(f"{Colors.YELLOW}  No items found in playlist, skipping.{Colors.RESET}")
+        if 'items' not in playlist_data or not playlist_data['items']:
+            logger.warning(f"No items in {playlist_file}")
+            print(f"{Colors.YELLOW}  No games found in this playlist, skipping.{Colors.RESET}")
             continue
 
-        core_path = playlist_data.get('default_core_path', 'DETECT')
-
-        if core_path == 'DETECT':
-            for item in playlist_data['items']:
-                if item.get('core_path') and item['core_path'] != "DETECT":
-                    core_path = item['core_path']
-                    break
-
-        if core_path == 'DETECT':
-            print(f"  {Colors.YELLOW}⚠️  Warning: No core path found, using 'DETECT'{Colors.RESET}")
+        global_core, use_individual = detect_core_mode(playlist_data, logger, system_name)
 
         metadata_content = [
             f"collection: {system_name}",
-            f"shortname: {shortname}",
-            f"launch: {launch_cmd} -L {core_path} {{file.path}}\n"
+            f"shortname: {shortname}"
         ]
+
+        if not use_individual:
+            metadata_content.append(f"launch: {launch_cmd_base} -L {global_core} {{file.path}}")
+        metadata_content.append("")
 
         games_count = 0
         for item in playlist_data['items']:
@@ -522,12 +597,9 @@ def generate_metadata_no_media(playlists_path, pegasus_home):
             if system_type == "Windows":
                 if rom_path.startswith('./'):
                     rom_path = rom_path[2:]
-
                 if rom_path.startswith('/'):
                     rom_path = rom_path[1:]
-
                 rom_path = rom_path.replace('/', '\\')
-
                 if not re.match(r'^[A-Za-z]:\\', rom_path):
                     rom_path = 'C:\\' + rom_path
             else:
@@ -535,7 +607,6 @@ def generate_metadata_no_media(playlists_path, pegasus_home):
                     rom_path = rom_path[2:]
                 if not rom_path.startswith('/'):
                     rom_path = '/' + rom_path
-
                 rom_path = rom_path.replace('\\', '/')
 
             game_name = item.get('label', '')
@@ -543,12 +614,23 @@ def generate_metadata_no_media(playlists_path, pegasus_home):
                 continue
 
             games_count += 1
-            game_metadata = [
-                f"game: {game_name}",
-                f"file: {rom_path}",
-                ""
-            ]
+            total_games += 1
 
+            game_metadata = [f"game: {game_name}", f"file: {rom_path}"]
+
+            if use_individual:
+                core_for_game = item.get('core_path', '').strip()
+                if not core_for_game or core_for_game == 'DETECT':
+                    default_core = playlist_data.get('default_core_path', '').strip()
+                    if default_core and default_core != 'DETECT':
+                        core_for_game = default_core
+                        logger.info(f"Game '{game_name}' has no core, using default_core_path: {default_core}")
+                    else:
+                        core_for_game = 'DETECT'
+                        logger.warning(f"Game '{game_name}' has no core defined, using DETECT")
+                game_metadata.append(f"launch: {launch_cmd_base} -L {core_for_game} {{file.path}}")
+
+            game_metadata.append("")
             metadata_content.extend(game_metadata)
 
         system_path = os.path.join(pegasus_home, shortname)
@@ -558,10 +640,25 @@ def generate_metadata_no_media(playlists_path, pegasus_home):
         with open(metadata_path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(metadata_content))
 
-        print(f"{Colors.GREEN}  ✓ Generated metadata with {games_count} games for {system_name}{Colors.RESET}")
-        print(f"  {Colors.CYAN}  Core used: {core_path}{Colors.RESET}\n")
+        processed += 1
+        if not use_individual:
+            logger.info(f"Generated {system_name} with {games_count} games (global core: {global_core})")
+            print(f"{Colors.GREEN}  ✓ Generated {system_name} with {games_count} games (global core){Colors.RESET}")
+            print(f"  {Colors.CYAN}  Core used: {global_core}{Colors.RESET}")
+        else:
+            logger.info(f"Generated {system_name} with {games_count} games (per‑game cores)")
+            print(f"{Colors.GREEN}  ✓ Generated {system_name} with {games_count} games (per‑game cores){Colors.RESET}")
+        print("")
+
+    logger.info(f"=== Finished processing {processed} playlists, total games: {total_games} ===")
+    return processed, total_games
+
 
 def main():
+    logger = None
+    total_playlists = 0
+    total_games = 0
+
     while True:
         print_banner()
         print_menu()
@@ -578,7 +675,7 @@ def main():
                     input("\nPress Enter to continue...")
                     continue
             elif choice == "3":
-                print(f"\n{Colors.CYAN}¡Thank you for using RetroPegasus Converter Tool!{Colors.RESET}")
+                print(f"\n{Colors.CYAN}Thank you for using RetroPegasus Converter Tool!{Colors.RESET}")
                 sys.exit(0)
             else:
                 print(f"{Colors.RED}Invalid option. Please select 1, 2 or 3.{Colors.RESET}")
@@ -590,37 +687,58 @@ def main():
 
             thumbnails_path = find_thumbnails_path(retroarch_path)
             if not thumbnails_path:
-                print(f"{Colors.RED}The 'thumbnails' folder was not found in the specified path.{Colors.RESET}")
+                print(f"{Colors.RED}The 'thumbnails' folder was not found at the specified path.{Colors.RESET}")
                 input("\nPress Enter to continue...")
                 continue
 
             playlists_path = find_playlists_path(retroarch_path)
             if not playlists_path:
-                print(f"{Colors.RED}The 'playlists' folder could not be found in the specified path.{Colors.RESET}")
+                print(f"{Colors.RED}The 'playlists' folder was not found at the specified path.{Colors.RESET}")
                 input("\nPress Enter to continue...")
                 continue
 
             output_path = get_output_path()
 
+            logger = setup_logging(output_path)
+            logger.info("=== RetroPegasus Converter Tool Started ===")
+            logger.info(f"Output path: {output_path}")
+            logger.info(f"RetroArch path: {retroarch_path}")
+            logger.info(f"Thumbnails path: {thumbnails_path}")
+            logger.info(f"Playlists path: {playlists_path}")
+
             media_mode = get_media_handling_mode()
+            logger.info(f"Media handling mode: {media_mode}")
 
             if media_mode == '1':
                 print(f"\n{Colors.CYAN}Using absolute paths for media (recommended){Colors.RESET}")
-                generate_metadata_absolute(playlists_path, output_path, thumbnails_path)
+                processed, games = generate_metadata_absolute(playlists_path, output_path, thumbnails_path, logger)
             elif media_mode == '2':
                 print(f"\n{Colors.CYAN}Copying media files...{Colors.RESET}")
-                process_thumbnails(thumbnails_path, output_path)
-                generate_metadata_files(playlists_path, output_path)
+                logger.warning("Mode 2 (copy media) is not implemented. Falling back to mode 1.")
+                print(f"{Colors.YELLOW}⚠️  Copy mode not implemented. Using mode 1 as fallback.{Colors.RESET}")
+                processed, games = generate_metadata_absolute(playlists_path, output_path, thumbnails_path, logger)
             else:
                 print(f"\n{Colors.CYAN}Skipping media files...{Colors.RESET}")
-                generate_metadata_no_media(playlists_path, output_path)
+                processed, games = generate_metadata_no_media(playlists_path, output_path, logger)
 
-            print(f"\n{Colors.GREEN}Conversion completed successfully!{Colors.RESET}")
+            total_playlists += processed
+            total_games += games
+
+            logger.info("=== Conversion completed successfully ===")
+            logger.info(f"Total playlists processed: {total_playlists}")
+            logger.info(f"Total games: {total_games}")
+
+            print(f"\n{Colors.GREEN}✓ Conversion completed successfully!{Colors.RESET}")
+            print(f"{Colors.CYAN}Total playlists processed: {total_playlists}{Colors.RESET}")
+            print(f"{Colors.CYAN}Total games: {total_games}{Colors.RESET}")
             input("\nPress Enter to continue...")
 
         except KeyboardInterrupt:
             print(f"\n\n{Colors.CYAN}See you later!{Colors.RESET}")
+            if logger:
+                logger.info("Process interrupted by user.")
             sys.exit(0)
+
 
 if __name__ == "__main__":
     main()
