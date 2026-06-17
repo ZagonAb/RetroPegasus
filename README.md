@@ -2,16 +2,18 @@
 
 A professional command-line utility for seamless migration from RetroArch to Pegasus Frontend. RetroPegasus automates the conversion of playlists, metadata, and media assets while maintaining compatibility across Windows, Linux, and macOS.
 
-![gif](https://github.com/ZagonAb/RetroPegasus/blob/c4ead06853653f24f4c5feb7ce1fcf8b59a216cd/assets/image/demo.gif)
+![demo](https://github.com/ZagonAb/RetroPegasus/blob/c4ead06853653f24f4c5feb7ce1fcf8b59a216cd/assets/image/demo.gif)
 
 ## ✨ Features
 
 - **Zero Dependencies** - Uses only Python standard library
 - **Cross-Platform** - Native support for Windows, Linux, and macOS
 - **Intelligent Auto-Detection** - Automatically locates RetroArch installations
+- **Interactive Collection Selection** - Choose which systems to convert (all, single, range, or custom combination)
+- **Smart Core Handling** - Detects global or per-game cores automatically
 - **Flexible Media Handling** - Choose between absolute paths, copy mode, or metadata-only generation
-- **Core Path Detection** - Correctly extracts default core paths from playlists
 - **Clean Terminal Interface** - ANSI color-coded output for better readability
+- **Detailed Logging** - Generates a comprehensive log file with timestamp and statistics
 - **Robust Error Handling** - Validates paths and provides clear error messages
 - **Batch Processing** - Handles multiple systems in a single execution
 
@@ -28,7 +30,7 @@ No external packages required. Uses only Python standard library modules.
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/RetroPegasus.git
+git clone https://github.com/ZagonAb/RetroPegasus.git
 cd RetroPegasus
 
 # Run the script
@@ -66,38 +68,35 @@ Choose between automatic detection or manual path specification.
 ### Step 2: Configure Output Location
 Select where to create the Pegasus Frontend data structure.
 
-### Step 3: Choose Media Handling Mode
+### Step 3: Select Collections to Convert
+After choosing the output folder, you'll see a list of all detected playlists. You can:
+
+- **Process all**: Type `a` or `0`
+- **Process specific**: Type numbers separated by commas (e.g., `1,3,5`)
+- **Process ranges**: Use hyphens (e.g., `2-4`)
+- **Combine**: Mix both (e.g., `1,3-5,7`)
+
+### Step 4: Choose Media Handling Mode
 - **Option 1 (Recommended)**: Use absolute paths to existing RetroArch thumbnails
 - **Option 2**: Copy images to Pegasus folder structure
 - **Option 3**: Skip media entirely (metadata only)
 
+The tool will then generate the necessary `metadata.txt` files for each selected system.
+
+## 🧠 Core Detection Logic
+
+RetroPegasus intelligently handles core assignments:
+
+- **Global Core**: If all games in a playlist use the same core, a single `launch:` line is added at the collection level.
+- **Per-Game Cores**: If games use different cores (or if one game uses a different core from the default), each game gets its own `launch:` line, preserving your individual core choices.
+- **Fallback**: If no core is defined, `DETECT` is used, letting RetroArch choose automatically.
+
+This ensures maximum compatibility with custom RetroArch configurations.
+
 ## 📁 Generated Structure
 
-### With Media Copy (Option 2)
-```
-~/pegasus-frontend/
-├── snes/
-│   ├── metadata.txt
-│   └── media/
-│       ├── boxFront/
-│       │   └── [game_boxarts].png
-│       ├── screenshot/
-│       │   └── [game_screenshots].png
-│       ├── logo/
-│       │   └── [game_logos].png
-│       └── titlescreen/
-│           └── [game_titles].png
-├── megadrive/
-│   ├── metadata.txt
-│   └── media/
-│       └── ...
-└── gba/
-    ├── metadata.txt
-    └── media/
-        └── ...
-```
-
 ### With Absolute Paths (Option 1 - Recommended)
+
 ```
 ~/pegasus-frontend/
 ├── snes/
@@ -106,6 +105,31 @@ Select where to create the Pegasus Frontend data structure.
 │   └── metadata.txt
 └── gba/
     └── metadata.txt
+```
+
+### With Media Copy (Option 2)
+
+```
+~/pegasus-frontend/
+├── snes/
+│   ├── metadata.txt
+│   └── media/
+│       ├── boxFront/
+│       │   └── game.png
+│       ├── screenshot/
+│       │   └── game.png
+│       ├── logo/
+│       │   └── game.png
+│       └── titlescreen/
+│           └── game.png
+├── megadrive/
+│   ├── metadata.txt
+│   └── media/
+│       └── ...
+└── gba/
+    ├── metadata.txt
+    └── media/
+        └── ...
 ```
 
 ## 📄 Metadata Format
@@ -175,11 +199,22 @@ The tool validates:
 - Valid JSON format in playlist files
 - Core path availability (with fallback mechanisms)
 
-## 📝 License
+## 📝 Logging
+
+A detailed log file `retropegaus.log` is created in the output folder. It includes:
+- Timestamped entries
+- Playlist processing status
+- Core detection results
+- Number of games per system
+- Total playlists and games processed
+
+The log is overwritten on each new execution for clarity.
+
+## 📜 License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-MIT License © 2024 Gonzalo Abbate (ZagonAb)
+MIT License © 2026 Gonzalo Abbate (ZagonAb)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software without restriction.
 
