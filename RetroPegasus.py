@@ -196,14 +196,20 @@ def print_menu():
 
 def setup_logging(output_path):
     log_file = os.path.join(output_path, "retropegaus.log")
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(log_file, encoding='utf-8')
-        ]
-    )
-    return logging.getLogger()
+
+    logger = logging.getLogger()
+    logger.handlers.clear()
+
+    file_handler = logging.FileHandler(log_file, mode='w', encoding='utf-8')
+    file_handler.setLevel(logging.INFO)
+
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+
+    logger.addHandler(file_handler)
+    logger.setLevel(logging.INFO)
+
+    return logger
 
 
 def get_output_path():
@@ -415,18 +421,100 @@ def get_media_handling_mode():
         print(f"{Colors.RED}Invalid option. Please select 1, 2 or 3.{Colors.RESET}")
 
 
-def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_path, logger):
+def select_playlists(playlists_path):
+    playlist_files = [f for f in os.listdir(playlists_path) if f.endswith('.lpl')]
+    if not playlist_files:
+        print(f"{Colors.RED}No playlist files found.{Colors.RESET}")
+        return []
+
+    playlist_files.sort()
+
+    print(f"\n{Colors.YELLOW}Available collections (playlists):{Colors.RESET}")
+    for idx, filename in enumerate(playlist_files, 1):
+        system_name = filename[:-4]
+        shortname = SYSTEM_SHORTNAMES.get(system_name, "unknown")
+        print(f"  {Colors.YELLOW}[{idx}]{Colors.RESET} {system_name} ({shortname})")
+
+    print(f"\n{Colors.CYAN}Enter the numbers of the collections to process.{Colors.RESET}")
+    print(f"  {Colors.CYAN}Examples:{Colors.RESET}")
+    print(f"    • 'a' or '0'  → process all")
+    print(f"    • '1,3,5'     → process collections 1, 3, and 5")
+    print(f"    • '2-4'       → process collections 2, 3, and 4")
+    print(f"    • '1,3-5,7'   → process 1, 3, 4, 5, and 7")
+
+    while True:
+        choice = input(f"\n{Colors.YELLOW}Your selection: {Colors.RESET}").strip()
+
+        if choice.lower() in ('a', '0'):
+            return [f[:-4] for f in playlist_files]
+
+        selected_indices = set()
+        parts = choice.split(',')
+        valid = True
+        for part in parts:
+            part = part.strip()
+            if '-' in part:
+                try:
+                    start, end = part.split('-')
+                    start = int(start.strip())
+                    end = int(end.strip())
+                    if start < 1 or end > len(playlist_files) or start > end:
+                        print(f"{Colors.RED}Invalid range: {part}. Please try again.{Colors.RESET}")
+                        valid = False
+                        break
+                    for i in range(start, end + 1):
+                        selected_indices.add(i)
+                except ValueError:
+                    print(f"{Colors.RED}Invalid range: {part}. Please try again.{Colors.RESET}")
+                    valid = False
+                    break
+            else:
+                try:
+                    num = int(part)
+                    if num < 1 or num > len(playlist_files):
+                        print(f"{Colors.RED}Number {num} is out of range (1-{len(playlist_files)}). Please try again.{Colors.RESET}")
+                        valid = False
+                        break
+                    selected_indices.add(num)
+                except ValueError:
+                    print(f"{Colors.RED}Invalid input: {part}. Please try again.{Colors.RESET}")
+                    valid = False
+                    break
+
+        if not valid:
+            continue
+
+        if not selected_indices:
+            print(f"{Colors.RED}No valid selections made. Please try again.{Colors.RESET}")
+            continue
+
+        selected_systems = []
+        for idx in sorted(selected_indices):
+            filename = playlist_files[idx - 1]
+            system_name = filename[:-4]
+            selected_systems.append(system_name)
+
+        return selected_systems
+
+
+def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_path, logger, selected_systems=None):
     logger.info("=== Generating metadata.txt files with absolute media paths ===")
     print(f"\n{Colors.YELLOW}Generating metadata.txt with absolute media paths...{Colors.RESET}")
 
     launch_cmd_base = get_launch_command()
     system_type = platform.system()
 
-    playlist_files = [f for f in os.listdir(playlists_path) if f.endswith('.lpl')]
-    total_playlists = len(playlist_files)
-    logger.info(f"Found {total_playlists} playlist files")
+    all_playlist_files = [f for f in os.listdir(playlists_path) if f.endswith('.lpl')]
 
-    print(f"{Colors.CYAN}Found {total_playlists} playlist files{Colors.RESET}\n")
+    if selected_systems is not None:
+        playlist_files = [f for f in all_playlist_files if f[:-4] in selected_systems]
+    else:
+        playlist_files = all_playlist_files
+
+    total_playlists = len(playlist_files)
+    logger.info(f"Found {total_playlists} playlist files to process (out of {len(all_playlist_files)} total)")
+
+    print(f"{Colors.CYAN}Processing {total_playlists} playlist files{Colors.RESET}\n")
 
     processed = 0
     total_games = 0
@@ -537,18 +625,24 @@ def generate_metadata_absolute(playlists_path, pegasus_home, thumbnails_base_pat
     return processed, total_games
 
 
-def generate_metadata_no_media(playlists_path, pegasus_home, logger):
+def generate_metadata_no_media(playlists_path, pegasus_home, logger, selected_systems=None):
     logger.info("=== Generating metadata.txt files without media ===")
     print(f"\n{Colors.YELLOW}Generating metadata.txt without media...{Colors.RESET}")
 
     launch_cmd_base = get_launch_command()
     system_type = platform.system()
 
-    playlist_files = [f for f in os.listdir(playlists_path) if f.endswith('.lpl')]
-    total_playlists = len(playlist_files)
-    logger.info(f"Found {total_playlists} playlist files")
+    all_playlist_files = [f for f in os.listdir(playlists_path) if f.endswith('.lpl')]
 
-    print(f"{Colors.CYAN}Found {total_playlists} playlist files{Colors.RESET}\n")
+    if selected_systems is not None:
+        playlist_files = [f for f in all_playlist_files if f[:-4] in selected_systems]
+    else:
+        playlist_files = all_playlist_files
+
+    total_playlists = len(playlist_files)
+    logger.info(f"Found {total_playlists} playlist files to process (out of {len(all_playlist_files)} total)")
+
+    print(f"{Colors.CYAN}Processing {total_playlists} playlist files{Colors.RESET}\n")
 
     processed = 0
     total_games = 0
@@ -705,21 +799,34 @@ def main():
             logger.info(f"RetroArch path: {retroarch_path}")
             logger.info(f"Thumbnails path: {thumbnails_path}")
             logger.info(f"Playlists path: {playlists_path}")
+            selected_systems = select_playlists(playlists_path)
+            if not selected_systems:
+                print(f"{Colors.RED}No collections selected. Aborting.{Colors.RESET}")
+                input("\nPress Enter to continue...")
+                continue
+
+            logger.info(f"Selected collections: {', '.join(selected_systems)}")
 
             media_mode = get_media_handling_mode()
             logger.info(f"Media handling mode: {media_mode}")
 
             if media_mode == '1':
                 print(f"\n{Colors.CYAN}Using absolute paths for media (recommended){Colors.RESET}")
-                processed, games = generate_metadata_absolute(playlists_path, output_path, thumbnails_path, logger)
+                processed, games = generate_metadata_absolute(
+                    playlists_path, output_path, thumbnails_path, logger, selected_systems
+                )
             elif media_mode == '2':
                 print(f"\n{Colors.CYAN}Copying media files...{Colors.RESET}")
                 logger.warning("Mode 2 (copy media) is not implemented. Falling back to mode 1.")
                 print(f"{Colors.YELLOW}⚠️  Copy mode not implemented. Using mode 1 as fallback.{Colors.RESET}")
-                processed, games = generate_metadata_absolute(playlists_path, output_path, thumbnails_path, logger)
+                processed, games = generate_metadata_absolute(
+                    playlists_path, output_path, thumbnails_path, logger, selected_systems
+                )
             else:
                 print(f"\n{Colors.CYAN}Skipping media files...{Colors.RESET}")
-                processed, games = generate_metadata_no_media(playlists_path, output_path, logger)
+                processed, games = generate_metadata_no_media(
+                    playlists_path, output_path, logger, selected_systems
+                )
 
             total_playlists += processed
             total_games += games
