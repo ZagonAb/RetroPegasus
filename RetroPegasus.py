@@ -195,7 +195,7 @@ def print_menu():
 
 
 def setup_logging(output_path):
-    log_file = os.path.join(output_path, "retropegaus.log")
+    log_file = os.path.join(output_path, "retropegasus.log")
 
     logger = logging.getLogger()
     logger.handlers.clear()

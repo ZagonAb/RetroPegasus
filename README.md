@@ -201,7 +201,7 @@ The tool validates:
 
 ## 📝 Logging
 
-A detailed log file `retropegaus.log` is created in the output folder. It includes:
+A detailed log file `retropegasus.log` is created in the output folder. It includes:
 - Timestamped entries
 - Playlist processing status
 - Core detection results
