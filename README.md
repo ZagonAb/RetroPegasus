@@ -2,6 +2,10 @@
 
 A professional command-line utility for seamless migration from RetroArch to Pegasus Frontend. RetroPegasus automates the conversion of playlists, metadata, and media assets while maintaining compatibility across Windows, Linux, and macOS.
 
+
+> The media file copying feature will be temporarily unavailable. It will be reintroduced in the next update, which will also include a simple yet fully functional graphical user interface, while preserving the command-line interface (CLI) experience.
+
+
 ![demo](https://github.com/ZagonAb/RetroPegasus/blob/c4ead06853653f24f4c5feb7ce1fcf8b59a216cd/assets/image/demo.gif)
 
 ## ✨ Features
