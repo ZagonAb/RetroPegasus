@@ -1,34 +1,50 @@
 # RetroPegasus Converter Tool
 
-A professional command-line utility for seamless migration from RetroArch to Pegasus Frontend. RetroPegasus automates the conversion of playlists, metadata, and media assets while maintaining compatibility across Windows, Linux, and macOS.
+**Your ultimate bridge from RetroArch to Pegasus Frontend**  
+Now with a beautiful **Graphical User Interface (GUI)** and full **Command-Line Interface (CLI)** support.
 
+---
 
-> The media file copying feature will be temporarily unavailable. It will be reintroduced in the next update, which will also include a simple yet fully functional graphical user interface, while preserving the command-line interface (CLI) experience.
+## 📌 What's New
 
+- 🖥️ **Modern GUI** built with Tkinter – intuitive, cross-platform, and feature-rich
+- 🌍 **Multi‑language support** – English, Español, Português, Français
+- 🌗 **Light / Dark themes** – comfortable for any lighting condition
+- ✅ **Visual system selection** – checkboxes, select/deselect all, scrollable list
+- 📊 **Real‑time progress** – live log, progress bar, and cancel button
+- 🧠 **Smarter core handling** – preserves your per‑game core choices automatically
+- 🖼️ **Media handling** – absolute paths, copy media, or skip (now fully functional)
 
-![demo](https://github.com/ZagonAb/RetroPegasus/blob/c4ead06853653f24f4c5feb7ce1fcf8b59a216cd/assets/image/demo.gif)
+---
 
-## ✨ Features
+## ✨ Key Features
 
-- **Zero Dependencies** - Uses only Python standard library
-- **Cross-Platform** - Native support for Windows, Linux, and macOS
-- **Intelligent Auto-Detection** - Automatically locates RetroArch installations
-- **Interactive Collection Selection** - Choose which systems to convert (all, single, range, or custom combination)
-- **Smart Core Handling** - Detects global or per-game cores automatically
-- **Flexible Media Handling** - Choose between absolute paths, copy mode, or metadata-only generation
-- **Clean Terminal Interface** - ANSI color-coded output for better readability
-- **Detailed Logging** - Generates a comprehensive log file with timestamp and statistics
-- **Robust Error Handling** - Validates paths and provides clear error messages
-- **Batch Processing** - Handles multiple systems in a single execution
+- **Zero external dependencies** – only Python standard library (Tkinter is included with most Python distributions)
+- **Cross‑platform** – Windows, Linux, macOS all supported natively
+- **Automatic RetroArch detection** – finds installations in standard locations
+- **Flexible collection selection** – choose all, individual, ranges, or combinations (CLI only)
+- **Smart core detection** – handles global and per‑game cores seamlessly
+- **Three media modes** – absolute paths (recommended), copy to Pegasus folder, or metadata‑only
+- **Rich logging** – detailed log file with timestamps and statistics
+- **Resilient error handling** – validates paths and provides clear feedback
+
+---
+
+![screen0](https://github.com/ZagonAb/RetroPegasus/blob/163a2714e9d185b48b13b2185f07e75759819f28/assets/image/screen0.png)
+---
+![screen1](https://github.com/ZagonAb/RetroPegasus/blob/163a2714e9d185b48b13b2185f07e75759819f28/assets/image/screen1.png)
 
 ## 📋 Requirements
 
-- Python 3.6 or higher
-- RetroArch installation with:
-  - `playlists` folder containing `.lpl` files
-  - `thumbnails` folder (optional, for media assets)
+- **Python 3.6+** (Python 3.10+ recommended for best GUI experience)
+- **Tkinter** – usually included with Python; on Linux you may need to install `python3-tk` separately
+- A valid **RetroArch** installation containing:
+  - `playlists/` folder with `.lpl` files
+  - `thumbnails/` folder (optional, for media assets)
 
-No external packages required. Uses only Python standard library modules.
+No additional packages are required – all code uses only the standard library.
+
+---
 
 ## 🚀 Quick Start
 
@@ -37,69 +53,98 @@ No external packages required. Uses only Python standard library modules.
 git clone https://github.com/ZagonAb/RetroPegasus.git
 cd RetroPegasus
 
-# Run the script
-python3 RetroPegasus.py
+# Launch the GUI (default)
+python3 main.py
+
+# Or use the CLI mode
+python3 main.py --cli
 ```
 
-## 💻 Supported Operating Systems
+> 💡 If you're on Linux and get a `No module named tkinter` error, install it with:
+> ```bash
+> sudo apt install python3-tk   # Debian/Ubuntu
+> sudo dnf install python3-tkinter   # Fedora
+> ```
 
-### Windows
-Automatically detects installations in:
-- `%APPDATA%\RetroArch`
-- `C:\Program Files\RetroArch`
-- `C:\Program Files (x86)\RetroArch`
-- `C:\RetroArch-Win32`
-- `C:\RetroArch-Win64`
+---
 
-### Linux
-Automatically detects installations in:
-- `/usr/bin/retroarch`
-- `~/.var/app/org.libretro.RetroArch/config/retroarch/` (Flatpak)
-- `~/snap/retroarch/current/retroarch` (Snap)
-- `~/.config/retroarch`
+## 🖥️ GUI Usage Guide
 
-### macOS
-Automatically detects installations in:
-- `~/Library/Application Support/RetroArch`
-- `/Applications/RetroArch.app`
-- `~/Applications/RetroArch.app`
+The GUI guides you step by step through the migration process.
 
-## 📖 Usage Guide
+### 1. Select RetroArch Installation
+- Click **Auto‑detect** to let the tool find your RetroArch folder, or
+- Click **Browse…** to manually choose it.
 
-### Step 1: Select RetroArch Source
-Choose between automatic detection or manual path specification.
+### 2. Choose Output Folder
+- The default is `~/pegasus-frontend` (or your OS equivalent).
+- You can browse to any existing folder – the tool will create sub‑folders for each system.
+- A hint shows whether the folder exists (content will be overwritten) or will be created.
 
-### Step 2: Configure Output Location
-Select where to create the Pegasus Frontend data structure.
+### 3. Pick Media Handling Mode
+- **Use absolute paths** (recommended) – no files are copied; uses RetroArch thumbnails directly.
+- **Copy media files** – copies boxarts, snaps, logos, and titlescreens into your Pegasus folder (portable, but slower).
+- **Skip media** – no images are referenced; metadata only.
 
-### Step 3: Select Collections to Convert
-After choosing the output folder, you'll see a list of all detected playlists. You can:
+### 4. Select Systems to Migrate
+- All detected RetroArch playlists are listed with checkboxes.
+- Use **Select all** / **Deselect all** to quickly choose.
+- Scroll through the list if you have many systems.
 
-- **Process all**: Type `a` or `0`
-- **Process specific**: Type numbers separated by commas (e.g., `1,3,5`)
-- **Process ranges**: Use hyphens (e.g., `2-4`)
-- **Combine**: Mix both (e.g., `1,3-5,7`)
+### 5. Start Migration
+- Click **Start migration** – a live log shows progress.
+- A progress bar indicates activity.
+- You can **Cancel** at any time (partial files will remain; you'll be prompted to confirm).
 
-### Step 4: Choose Media Handling Mode
-- **Option 1 (Recommended)**: Use absolute paths to existing RetroArch thumbnails
-- **Option 2**: Copy images to Pegasus folder structure
-- **Option 3**: Skip media entirely (metadata only)
+### 6. Completion
+- A summary dialog shows how many collections and games were processed.
+- The log is automatically saved to `retropegasus.log` in your output folder.
+- You can expand/hide the log panel at any time.
 
-The tool will then generate the necessary `metadata.txt` files for each selected system.
+### Extra GUI Features
+- **Language selector** – switch between English, Spanish, Portuguese, and French.
+- **Theme selector** – toggle between Light and Dark themes.
 
-## 🧠 Core Detection Logic
+---
 
-RetroPegasus intelligently handles core assignments:
+## ⌨️ CLI Usage Guide
 
-- **Global Core**: If all games in a playlist use the same core, a single `launch:` line is added at the collection level.
-- **Per-Game Cores**: If games use different cores (or if one game uses a different core from the default), each game gets its own `launch:` line, preserving your individual core choices.
-- **Fallback**: If no core is defined, `DETECT` is used, letting RetroArch choose automatically.
+For those who prefer the terminal, the CLI remains fully functional.
 
-This ensures maximum compatibility with custom RetroArch configurations.
+Run with:
+```bash
+python3 main.py --cli
+```
 
-## 📁 Generated Structure
+Then follow the interactive prompts:
 
-### With Absolute Paths (Option 1 - Recommended)
+1. **Choose RetroArch source** – auto‑detect or manual path.
+2. **Select output folder** – default or custom.
+3. **Choose collections** – enter:
+   - `a` or `0` for all
+   - comma‑separated numbers (e.g., `1,3,5`)
+   - ranges (e.g., `2-4`)
+   - combinations (e.g., `1,3-5,7`)
+4. **Pick media mode** – `1` (absolute), `2` (copy), or `3` (skip).
+5. Sit back while the tool processes everything – colourful ANSI output shows progress.
+
+---
+
+## 🧠 How Core Detection Works
+
+RetroPegasus analyses each playlist and decides the best launch strategy:
+
+- **Single core** – if all games share the same core, it writes a single `launch:` line at the collection level.
+- **Multiple cores** – if games use different cores (or override the default), it writes a per‑game `launch:` line for each.
+- **Fallback** – if a game has no core defined, it uses `DETECT`, letting RetroArch choose automatically.
+
+This preserves your custom core assignments and avoids unnecessary duplication.
+
+---
+
+## 📁 Generated Folder Structure
+
+### With Absolute Paths (Option 1 – recommended)
 
 ```
 ~/pegasus-frontend/
@@ -119,31 +164,27 @@ This ensures maximum compatibility with custom RetroArch configurations.
 │   ├── metadata.txt
 │   └── media/
 │       ├── boxFront/
-│       │   └── game.png
+│       │   └── Super Mario World.png
 │       ├── screenshot/
-│       │   └── game.png
+│       │   └── Super Mario World.png
 │       ├── logo/
-│       │   └── game.png
+│       │   └── Super Mario World.png
 │       └── titlescreen/
-│           └── game.png
+│           └── Super Mario World.png
 ├── megadrive/
-│   ├── metadata.txt
-│   └── media/
-│       └── ...
+│   └── ...
 └── gba/
-    ├── metadata.txt
-    └── media/
-        └── ...
+    └── ...
 ```
 
-## 📄 Metadata Format
+---
 
-Each `metadata.txt` file contains:
+## 📄 Example metadata.txt
 
 ```ini
 collection: Nintendo - Super Nintendo Entertainment System
 shortname: snes
-launch: retroarch -L /path/to/core.so {file.path}
+launch: retroarch -L /path/to/snes_libretro.so {file.path}
 
 game: Super Mario World
 file: /path/to/roms/Super Mario World.sfc
@@ -153,66 +194,61 @@ assets.logo: /path/to/thumbnails/Nintendo - SNES/Named_Logos/Super Mario World.p
 assets.titlescreen: /path/to/thumbnails/Nintendo - SNES/Named_Titles/Super Mario World.png
 ```
 
+---
+
 ## 🎮 Supported Systems
 
-<details>
-<summary>Click to expand full list (100+ systems)</summary>
+The tool includes a comprehensive mapping of RetroArch system names to Pegasus shortnames, covering over **100 systems**.  
+A few examples:
 
 | RetroArch System | Pegasus Shortname |
-|-----------------|-------------------|
-| Amstrad - CPC | amstradcpc |
-| Atari - 2600 | atari2600 |
-| Atari - 5200 | atari5200 |
-| Atari - 7800 | atari7800 |
-| Atari - Jaguar | atarijaguar |
-| Atari - Lynx | atarilynx |
-| Commodore - 64 | c64 |
-| Commodore - Amiga | amiga |
-| DOS | dos |
-| MAME | mame |
-| Microsoft - MSX | msx |
-| Microsoft - Xbox | xbox |
-| Nintendo - Game Boy | gb |
-| Nintendo - Game Boy Advance | gba |
-| Nintendo - Game Boy Color | gbc |
-| Nintendo - GameCube | gamecube |
-| Nintendo - Nintendo 64 | n64 |
-| Nintendo - Nintendo DS | nds |
-| Nintendo - NES | nes |
-| Nintendo - SNES | snes |
-| Sega - Dreamcast | dreamcast |
-| Sega - Game Gear | gamegear |
-| Sega - Genesis/Mega Drive | megadrive |
-| Sega - Master System | mastersystem |
-| Sega - Saturn | saturn |
-| SNK - Neo Geo | ngp |
-| SNK - Neo Geo Pocket | ngp |
+|------------------|-------------------|
+| Nintendo - SNES  | snes              |
+| Sega - Mega Drive - Genesis | megadrive |
 | Sony - PlayStation | psx |
-| Sony - PlayStation 2 | ps2 |
-| Sony - PlayStation Portable | psp |
-| ...and 70+ more systems |
+| Nintendo - NES   | nes               |
+| Atari - 2600     | atari2600         |
+| MAME             | mame              |
+| ... and many more | (full list inside `core.py`) |
 
-</details>
+If a system is not recognised, it will be skipped and logged.
 
-## ⚙️ Configuration Validation
-
-The tool validates:
-- Existence of RetroArch installation directory
-- Presence of required `playlists` and `thumbnails` folders
-- Non-empty folder contents
-- Valid JSON format in playlist files
-- Core path availability (with fallback mechanisms)
+---
 
 ## 📝 Logging
 
-A detailed log file `retropegasus.log` is created in the output folder. It includes:
-- Timestamped entries
-- Playlist processing status
-- Core detection results
-- Number of games per system
-- Total playlists and games processed
+A detailed log file `retropegasus.log` is created in your output folder. It records:
 
-The log is overwritten on each new execution for clarity.
+- Timestamped entries
+- Each playlist processed
+- Core detection decisions
+- Game counts per system
+- Media copy status (if enabled)
+- Any errors or warnings
+
+The log is overwritten each time you run the tool, ensuring a clean start.
+
+---
+
+## 🔧 Troubleshooting
+
+**Tkinter not found**  
+- On Linux: install `python3-tk` (or equivalent).
+- On Windows/macOS: Tkinter is usually included by default with Python.
+
+**No RetroArch installation found**  
+- Use the **Browse…** button to manually select your RetroArch folder.
+- Ensure the folder contains `playlists/` and `thumbnails/` subdirectories (even if empty).
+
+**Media files not showing up**  
+- Check that your RetroArch thumbnails are stored in the expected folder structure:
+  `thumbnails/System Name/Named_Boxarts/Game.png`
+- If you choose **absolute paths**, Pegasus will look for those exact paths – make sure they are accessible.
+
+**Migration takes too long**  
+- If you have many games and choose **copy media**, the process may take a while. Consider using **absolute paths** for faster performance.
+
+---
 
 ## 📜 License
 
@@ -224,10 +260,16 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
 
+---
+
 ## 💖 Support
 
-I'm a programming enthusiast passionate about free software and the retro gaming community. All my themes and projects are open-source and freely available. If you find this tool useful, consider supporting its continued development:
+I'm a programming enthusiast passionate about free software and the retro gaming community. All my themes and projects are open‑source and freely available. If you find this tool useful, consider supporting its continued development:
 
 [![Support on PayPal](https://img.shields.io/badge/PayPal-0070ba?style=for-the-badge)](https://paypal.me/ZagonAb)
 [![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/Gonzalo/donate)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-29abe0?style=for-the-badge&logo=ko-fi)](https://ko-fi.com/zagonab)
+
+---
+
+**Happy retro-gaming!** 🕹️
