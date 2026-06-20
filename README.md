@@ -17,6 +17,7 @@ Now with a beautiful **Graphical User Interface (GUI)** and full **Command-Line 
 
 ---
 
+
 ## ✨ Key Features
 
 - **Zero external dependencies** – only Python standard library (Tkinter is included with most Python distributions)
